@@ -1,11 +1,10 @@
-import axios from 'axios';
+import { request } from '../utils';
 
-const url = 'localhost:4000/auth';
+const path = 'users';
 
-export const login = async (params: { username: string; password: string }) => {
-  return await axios({
-    data: params,
-    method: 'POST',
-    url: `${url}/login`,
+export const getMe = async () => {
+  return await request<Data.User>({
+    method: 'GET',
+    url: `${path}/users/me`,
   });
 };
