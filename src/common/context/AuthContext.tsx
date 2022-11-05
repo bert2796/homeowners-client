@@ -24,7 +24,7 @@ export const AuthContext = React.createContext(initialValue);
 
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = React.useState<Data.User | undefined>(undefined);
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(['token']);
 
   React.useEffect(() => {
     const loadUserFromCookies = async () => {

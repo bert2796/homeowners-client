@@ -42,15 +42,6 @@ export default function App(props: AppPropsWithLayout) {
         },
       }}
     >
-<<<<<<< HEAD
-      <QueryClientProvider client={queryClient}>
-        <div className={classes.main}>
-          {getLayout(<Component {...pageProps} />)}
-        </div>
-
-        <ReactQueryDevtools initialIsOpen />
-      </QueryClientProvider>
-=======
       <CookiesProvider>
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
@@ -62,7 +53,6 @@ export default function App(props: AppPropsWithLayout) {
           </QueryClientProvider>
         </AuthProvider>
       </CookiesProvider>
->>>>>>> initial commit
     </MantineProvider>
   );
 }
