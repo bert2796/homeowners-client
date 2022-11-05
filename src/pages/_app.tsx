@@ -4,6 +4,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import React from 'react';
+import { CookiesProvider } from 'react-cookie';
+
+import { AuthProvider } from '../common/context';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -39,13 +42,17 @@ export default function App(props: AppPropsWithLayout) {
         },
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        <div className={classes.main}>
-          {getLayout(<Component {...pageProps} />)}
-        </div>
+      <CookiesProvider>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <div className={classes.main}>
+              {getLayout(<Component {...pageProps} />)}
+            </div>
 
-        <ReactQueryDevtools initialIsOpen />
-      </QueryClientProvider>
+            <ReactQueryDevtools initialIsOpen />
+          </QueryClientProvider>
+        </AuthProvider>
+      </CookiesProvider>
     </MantineProvider>
   );
 }
