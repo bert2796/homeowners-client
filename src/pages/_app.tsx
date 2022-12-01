@@ -1,4 +1,9 @@
+import '@fullcalendar/common/main.css';
+import '@fullcalendar/daygrid/main.css';
+import '@fullcalendar/timegrid/main.css';
+
 import { createStyles, MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NextPage } from 'next';
@@ -6,6 +11,7 @@ import type { AppProps } from 'next/app';
 import React from 'react';
 import { CookiesProvider } from 'react-cookie';
 
+import { RouterTransition } from '../common/components/widgets/RouterTransition';
 import { AuthProvider } from '../common/context';
 
 export type NextPageWithLayout = NextPage & {
@@ -31,6 +37,9 @@ export default function App(props: AppPropsWithLayout) {
       theme={{
         /** Put your mantine theme override here */
         colorScheme: 'light',
+        colors: {
+          sidebar: ['#1e1e2d'],
+        },
         other: {
           breakpoints: {
             lg: '',
@@ -42,23 +51,33 @@ export default function App(props: AppPropsWithLayout) {
         },
       }}
     >
-      <CookiesProvider>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <div className={classes.main}>
-              {getLayout(<Component {...pageProps} />)}
-            </div>
+      <style global jsx>{`
+        html,
+        body {
+          height: 100%;
+        }
+      `}</style>
+      <RouterTransition />
 
-            <ReactQueryDevtools initialIsOpen />
-          </QueryClientProvider>
-        </AuthProvider>
-      </CookiesProvider>
+      <NotificationsProvider>
+        <CookiesProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <div className={classes.main}>
+                {getLayout(<Component {...pageProps} />)}
+              </div>
+
+              <ReactQueryDevtools initialIsOpen />
+            </QueryClientProvider>
+          </AuthProvider>
+        </CookiesProvider>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }
 
 const useStyles = createStyles(() => ({
   main: {
-    minHeight: '100vh',
+    height: '100%',
   },
 }));

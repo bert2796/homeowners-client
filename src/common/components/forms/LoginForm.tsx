@@ -34,6 +34,7 @@ export const LoginForm = () => {
 
     if (!Object.keys(form.errors).length && auth.login) {
       setIsLoading(true);
+      setError('');
 
       auth
         .login(form.values)
@@ -41,6 +42,7 @@ export const LoginForm = () => {
           console.log(auth.user);
         })
         .catch((error) => {
+          console.log(error);
           setError(error?.message);
         })
         .finally(() => {

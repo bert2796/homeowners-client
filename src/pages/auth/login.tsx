@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 
 import { LoginForm } from '../../common/components/forms/LoginForm';
+import { withNonAuth } from '../../common/components/hoc/withNonAuth';
 
 const Login: NextPage = () => {
   return (
@@ -15,4 +16,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default withNonAuth(Login);
