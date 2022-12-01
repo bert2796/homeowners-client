@@ -63,7 +63,7 @@ export const LoginForm = () => {
           >
             Login
           </Title>
-          <Text>Lorem Ipsum is simply dummy text</Text>
+          <Text>Welcome back!</Text>
         </Box>
 
         <Box mt="xl">

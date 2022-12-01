@@ -12,16 +12,18 @@ export const NavHeader: React.FC<Props> = ({ link }) => {
 
   return (
     <Link className={classes.logo} href={link}>
-      <Image alt="logo" height="48" src="/logo-light.svg" width="150" />
+      Sta. Barbara Villas 1
     </Link>
   );
 };
 
 const useStyles = createStyles((theme) => ({
   logo: {
+    color: theme.white,
     cursor: 'pointer',
     display: 'flex',
     flexGrow: 0,
+    fontSize: 24,
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     position: 'relative',
   },
