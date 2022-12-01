@@ -8,7 +8,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 import React from 'react';
 import { CookiesProvider } from 'react-cookie';
 
@@ -58,13 +57,6 @@ export default function App(props: AppPropsWithLayout) {
           height: 100%;
         }
       `}</style>
-
-      <Head>
-        <meta
-          content="upgrade-insecure-requests"
-          http-equiv="Content-Security-Policy"
-        />
-      </Head>
 
       <RouterTransition />
 
