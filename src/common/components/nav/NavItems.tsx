@@ -16,29 +16,38 @@ export const NavItems: React.FC<Props> = ({ items }) => {
 
   return (
     <>
-      {items.map(({ href, label, icon: Icon }) => (
-        <Tooltip
-          withArrow
-          disabled={!isCollapsed}
-          key={label}
-          label={label}
-          position="right"
-          sx={(theme) => ({
-            marginBottom: theme.spacing.xs,
-            width: '100%',
-          })}
-        >
-          <Link
-            className={cx(classes.link, {
-              [classes.linkActive]: pathname === href,
+      {items.map(({ href, label, icon: Icon }) => {
+        const splitPath = href.split('/');
+        const getUpTo2ndPath =
+          splitPath.length > 3
+            ? [splitPath[0], splitPath[1], splitPath[2]].join('/')
+            : splitPath.join('/');
+        const isSamePath = pathname.startsWith(getUpTo2ndPath);
+
+        return (
+          <Tooltip
+            withArrow
+            disabled={!isCollapsed}
+            key={label}
+            label={label}
+            position="right"
+            sx={(theme) => ({
+              marginBottom: theme.spacing.xs,
+              width: '100%',
             })}
-            href={href}
           >
-            <Icon className={classes.linkIcon} />
-            <span className={classes.linkLabel}>{label}</span>
-          </Link>
-        </Tooltip>
-      ))}
+            <Link
+              className={cx(classes.link, {
+                [classes.linkActive]: isSamePath,
+              })}
+              href={href}
+            >
+              <Icon className={classes.linkIcon} />
+              <span className={classes.linkLabel}>{label}</span>
+            </Link>
+          </Tooltip>
+        );
+      })}
     </>
   );
 };

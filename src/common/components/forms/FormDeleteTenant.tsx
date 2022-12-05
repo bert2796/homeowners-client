@@ -29,7 +29,7 @@ export const FormDeleteTenant: React.FC<Props> = ({
     // reset error
     reset();
 
-    // delete property
+    // delete tenant
     deleteTenant();
   };
 

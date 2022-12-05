@@ -6,8 +6,10 @@ import {
   IconNews,
   IconScale,
   IconSettings,
+  IconUsers,
   IconUserSearch,
 } from '@tabler/icons';
+import Router from 'next/router';
 import React from 'react';
 
 import { Routes } from '../../constants';
@@ -57,6 +59,11 @@ const ITEMS = [
     label: 'Polls',
   },
   {
+    href: getRoutePath(Routes.ADMIN_STAFFS),
+    icon: IconUsers,
+    label: 'Staffs',
+  },
+  {
     href: getRoutePath(Routes.ADMIN_SETTINGS),
     icon: IconSettings,
     label: 'Settings',
@@ -66,20 +73,30 @@ const ITEMS = [
 export const Admin: React.FC<Props> = ({ children }) => {
   const auth = useAuth();
 
-  if (!auth?.user) {
+  if (!auth.isInitialized) {
     return null;
+  }
+
+  if (!auth.user) {
+    Router.push('/auth/login');
   }
 
   if (auth?.user?.role !== 'Admin') {
     return <NotFound />;
   }
 
-  return (
-    <DashboardLayout
-      headerLink={getRoutePath(Routes.ADMIN_DASHBOARD)}
-      items={ITEMS}
-    >
-      {children}
-    </DashboardLayout>
-  );
+  if (auth.user) {
+    return (
+      <>
+        <DashboardLayout
+          headerLink={getRoutePath(Routes.ADMIN_DASHBOARD)}
+          items={ITEMS}
+        >
+          {children}
+        </DashboardLayout>
+      </>
+    );
+  }
+
+  return null;
 };

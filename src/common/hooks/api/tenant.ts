@@ -30,7 +30,7 @@ export const useCreateTenant = () => {
 
       return previousData;
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['getTenants']);
     },
   });
@@ -48,9 +48,10 @@ export const useEditTenant = (id: number, data: UserEditParams) => {
 
       return previousData;
     },
-    onSettled: (res) => {
+    onSuccess: (res) => {
       if (res?.data) {
         queryClient.setQueryData(['getTenant', id], () => res.data);
+        queryClient.invalidateQueries(['getTenants']);
       }
     },
   });
@@ -68,14 +69,8 @@ export const useDeleteTenant = (id: number) => {
 
       return previousData;
     },
-    onSettled: () => {
-      const previousData = (
-        queryClient.getQueryData(['getTenants']) as { data: Data.User[] }
-      )?.data;
-
-      queryClient.setQueryData(['getTenants'], () =>
-        previousData?.filter((data) => data.id !== id)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['getTenants']);
     },
   });
 };

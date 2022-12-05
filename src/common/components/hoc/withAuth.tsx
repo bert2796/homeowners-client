@@ -9,14 +9,12 @@ export const withAuth = (Component: NextPageWithLayout) => {
   const AuthenticatedComponent: NextPageWithLayout = (props: any) => {
     const auth = useAuth();
 
-    React.useEffect(() => {
-      if (!auth.user) {
-        Router.push('/auth/login');
-      }
-    }, [auth.user]);
+    if (auth.isInitialized && !auth.user) {
+      Router.push('/auth/login');
+    }
 
     // render the component if app was initialized and if user is authenticated
-    if (auth?.user) {
+    if (auth.isInitialized && auth?.user) {
       return <Component {...props} />;
     }
 

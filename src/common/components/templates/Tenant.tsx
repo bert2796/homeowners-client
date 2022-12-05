@@ -5,6 +5,7 @@ import {
   IconNews,
   IconScale,
 } from '@tabler/icons';
+import Router from 'next/router';
 import React from 'react';
 
 import { Routes } from '../../constants';
@@ -48,20 +49,28 @@ const ITEMS = [
 export const Tenant: React.FC<Props> = ({ children }) => {
   const auth = useAuth();
 
-  if (!auth?.user) {
+  if (!auth.isInitialized) {
     return null;
+  }
+
+  if (!auth.user) {
+    Router.push('/auth/login');
   }
 
   if (auth?.user?.role !== 'Tenant') {
     return <NotFound />;
   }
 
-  return (
-    <DashboardLayout
-      headerLink={getRoutePath(Routes.TENANT_DASHBOARD)}
-      items={ITEMS}
-    >
-      {children}
-    </DashboardLayout>
-  );
+  if (auth.user) {
+    return (
+      <DashboardLayout
+        headerLink={getRoutePath(Routes.TENANT_DASHBOARD)}
+        items={ITEMS}
+      >
+        {children}
+      </DashboardLayout>
+    );
+  }
+
+  return null;
 };

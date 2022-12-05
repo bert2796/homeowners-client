@@ -29,6 +29,18 @@ export type PaginateParams = {
   search?: string;
 };
 
+export type ExtraChargeCreateParams = Omit<
+  Data.ExtraCharge,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
+export type ExtraChargeEditParams = ExtraChargeCreateParams;
+
+export type PollCreateParams = Omit<
+  Data.Poll,
+  'id' | 'pollChoices' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
 export type PropertyCreateParams = Omit<
   Data.Property,
   | 'id'
@@ -40,7 +52,21 @@ export type PropertyCreateParams = Omit<
   | 'deletedAt'
 >;
 
+export type PropertySettingsCreateParams = Omit<
+  Data.PropertySettings,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
+export type PropertySettingsEditParams = PropertySettingsCreateParams;
+
 export type PropertyEditParams = PropertyCreateParams;
+
+export type UtilityCreateParams = Omit<
+  Data.Utility,
+  'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+>;
+
+export type UtilityEditParams = UtilityCreateParams;
 
 export type AnnouncementCreateParams = Omit<
   Data.Announcement,

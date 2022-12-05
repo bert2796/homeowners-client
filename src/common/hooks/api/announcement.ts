@@ -33,7 +33,7 @@ export const useCreateAnnouncement = () => {
 
       return previousData;
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['getAnnouncements']);
     },
   });
@@ -54,9 +54,10 @@ export const useEditAnnouncement = (
 
       return previousData;
     },
-    onSettled: (res) => {
+    onSuccess: (res) => {
       if (res?.data) {
         queryClient.setQueryData(['getAnnouncement', id], () => res.data);
+        queryClient.invalidateQueries(['getAnnouncements']);
       }
     },
   });
@@ -74,16 +75,8 @@ export const useDeleteAnnouncement = (id: number) => {
 
       return previousData;
     },
-    onSettled: () => {
-      const previousData = (
-        queryClient.getQueryData(['getAnnouncements']) as {
-          data: Data.Announcement[];
-        }
-      )?.data;
-
-      queryClient.setQueryData(['getAnnouncements'], () =>
-        previousData?.filter((data) => data.id !== id)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['getAnnouncements']);
     },
   });
 };

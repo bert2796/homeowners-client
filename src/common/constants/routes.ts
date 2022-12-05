@@ -5,6 +5,7 @@ export enum Routes {
   ADMIN_FACILITIES = 'ADMIN_FACILITIES',
   ADMIN_RESERVATIONS = 'ADMIN_RESERVATIONS',
   ADMIN_TENANTS = 'ADMIN_TENANTS',
+  ADMIN_STAFFS = 'ADMIN_STAFFS',
   ADMIN_ANNOUNCEMENTS = 'ADMIN_ANNOUNCEMENTS',
   ADMIN_POLLS = 'ADMIN_POLLS',
   ADMIN_SETTINGS = 'ADMIN_SETTINGS',
@@ -41,6 +42,9 @@ export const routes: {
   [Routes.ADMIN_TENANTS]: {
     path: '/admin/tenants',
   },
+  [Routes.ADMIN_STAFFS]: {
+    path: '/admin/staffs',
+  },
   [Routes.ADMIN_ANNOUNCEMENTS]: {
     path: '/admin/announcements',
   },
@@ -48,7 +52,7 @@ export const routes: {
     path: '/admin/polls',
   },
   [Routes.ADMIN_SETTINGS]: {
-    path: '/admin/settings',
+    path: '/admin/settings/property-types',
   },
 
   // Tenant

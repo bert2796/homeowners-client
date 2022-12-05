@@ -1,50 +1,50 @@
-import { Box, createStyles, Grid } from '@mantine/core';
+import { Box, createStyles, Grid, Tabs } from '@mantine/core';
 import {
-  IconFileAnalytics,
   IconLicense,
   IconMessage2,
   IconMessages,
-  IconReceiptRefund,
   IconShoppingCart,
-  IconUsers,
 } from '@tabler/icons';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-import { withAuth } from '../../common/components/hoc/withAuth';
 import { Admin } from '../../common/components/templates/Admin';
 import { Breadcrumbs } from '../../common/components/widgets/Breadcrumbs';
 import { NextPageWithLayout } from '../_app';
 
 const Settings: NextPageWithLayout = () => {
+  const router = useRouter();
   const { classes, cx } = useStyles();
   const tabs = [
-    { icon: IconShoppingCart, label: 'Property Types', link: '' },
-    { icon: IconLicense, label: 'Property Blocks', link: '' },
-    { icon: IconMessage2, label: 'Property Phases', link: '' },
-    { icon: IconMessages, label: 'Messages', link: '' },
-    { icon: IconUsers, label: 'Customers', link: '' },
-    { icon: IconReceiptRefund, label: 'Refunds', link: '' },
-    { icon: IconFileAnalytics, label: 'Files', link: '' },
+    {
+      icon: IconShoppingCart,
+      label: 'Property Types',
+      path: '/settings/property-types',
+    },
+    {
+      icon: IconLicense,
+      label: 'Property Blocks',
+      path: '/settings/property-blocks',
+    },
+    {
+      icon: IconMessage2,
+      label: 'Property Phases',
+      path: '/settings/property-phases',
+    },
+    { icon: IconMessages, label: 'Utilities', path: '/settings/utilities' },
   ];
 
-  const [active, setActive] = React.useState('Orders');
-
-  const links = tabs.map((item) => (
-    <a
-      className={cx(classes.link, {
-        [classes.linkActive]: item.label === active,
-      })}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
-  ));
+  const items = tabs?.length
+    ? tabs.map((tab) => (
+        <Tabs.Tab
+          icon={<tab.icon size={18} />}
+          key={tab.label}
+          value={tab.path}
+        >
+          {tab.label}
+        </Tabs.Tab>
+      ))
+    : [];
 
   return (
     <>
@@ -55,7 +55,16 @@ const Settings: NextPageWithLayout = () => {
 
       <Box bg="#fff" mb="xl" mt="xl" p="md">
         <Grid>
-          <Grid.Col span={3}>{links}</Grid.Col>
+          <Grid.Col span={3}>
+            <Tabs
+              orientation="vertical"
+              value={router.pathname}
+              variant="pills"
+              onTabChange={(value) => router.push(value as string)}
+            >
+              <Tabs.List>{items}</Tabs.List>
+            </Tabs>
+          </Grid.Col>
         </Grid>
       </Box>
     </>
@@ -64,7 +73,7 @@ const Settings: NextPageWithLayout = () => {
 
 Settings.getLayout = (page: React.ReactElement) => <Admin>{page}</Admin>;
 
-export default withAuth(Settings);
+export default Settings;
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');

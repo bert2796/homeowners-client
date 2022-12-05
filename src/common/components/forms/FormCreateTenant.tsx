@@ -73,7 +73,7 @@ export const FormCreateTenant: React.FC<Props> = ({ onCancel, onSuccess }) => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Property created successfully');
+      onSuccess('Tenant created successfully');
 
       onCancel();
     }

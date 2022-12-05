@@ -4,7 +4,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import { Box } from '@mantine/core';
 import React from 'react';
 
-import { withAuth } from '../../common/components/hoc/withAuth';
 import { Admin } from '../../common/components/templates/Admin';
 import { Breadcrumbs } from '../../common/components/widgets/Breadcrumbs';
 import { NextPageWithLayout } from '../_app';
@@ -27,4 +26,4 @@ const Reservations: NextPageWithLayout = () => {
 
 Reservations.getLayout = (page: React.ReactElement) => <Admin>{page}</Admin>;
 
-export default withAuth(Reservations);
+export default Reservations;

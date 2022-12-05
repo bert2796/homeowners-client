@@ -30,7 +30,7 @@ export const useCreateProperty = () => {
 
       return previousData;
     },
-    onSettled: () => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['getProperties']);
     },
   });
@@ -48,9 +48,10 @@ export const useEditProperty = (id: number, data: PropertyEditParams) => {
 
       return previousData;
     },
-    onSettled: (res) => {
+    onSuccess: (res) => {
       if (res?.data) {
         queryClient.setQueryData(['getProperty', id], () => res.data);
+        queryClient.invalidateQueries(['getProperties']);
       }
     },
   });
@@ -68,16 +69,8 @@ export const useDeleteProperty = (id: number) => {
 
       return previousData;
     },
-    onSettled: () => {
-      const previousData = (
-        queryClient.getQueryData(['getProperties']) as { data: Data.Property[] }
-      )?.data;
-
-      console.log(previousData);
-
-      queryClient.setQueryData(['getProperties'], () =>
-        previousData?.filter((data) => data.id !== id)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['getProperties']);
     },
   });
 };

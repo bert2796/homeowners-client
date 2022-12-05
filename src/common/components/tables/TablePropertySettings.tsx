@@ -1,7 +1,6 @@
-import { createStyles, Loader, Paper, Text } from '@mantine/core';
+import { createStyles, Loader, Paper } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { ColumnDef } from '@tanstack/react-table';
-import dayjs from 'dayjs';
 import React from 'react';
 
 import { useGetPropertySettings } from '../../hooks/api';
@@ -11,15 +10,15 @@ import { SearchAndAdd } from '../widgets/SearchAndAdd';
 import { TableInstance } from './TableInstance';
 
 type Props = {
-  type: 'Type' | 'Block' | 'Phase';
+  settingsType: 'Type' | 'Block' | 'Phase';
   onAdd?: () => void;
   onDelete?: (id: number) => void;
   onEdit?: (id: number) => void;
   onView?: (id: number) => void;
 };
 
-export const TableProperties: React.FC<Props> = ({
-  type,
+export const TablePropertySettings: React.FC<Props> = ({
+  settingsType,
   onAdd,
   onDelete,
   onEdit,
@@ -30,7 +29,7 @@ export const TableProperties: React.FC<Props> = ({
   const { classes } = useStyles();
   const [debounced] = useDebouncedValue(search, 200);
   const { data: getPropertySettings, isLoading } =
-    useGetPropertySettings(type)();
+    useGetPropertySettings(settingsType)();
 
   const columns = React.useMemo<ColumnDef<Data.PropertySettings>[]>(
     () => [
@@ -42,15 +41,26 @@ export const TableProperties: React.FC<Props> = ({
         accessorKey: 'display',
         header: 'DISPLAY',
       },
+      {
+        cell: ({ row }) => (
+          <ActionButton
+            id={row.original.id}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            onView={onView}
+          />
+        ),
+        header: 'ACTIONS',
+      },
     ],
-    []
+    [onDelete, onEdit, onView]
   );
 
   const handleChangedSearch = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(event.currentTarget.value);
 
   return (
-    <Paper p="xl" shadow="sm">
+    <Paper p="xl">
       {isLoading && (
         <div className={classes.loader}>
           <Loader mt="xl" />
@@ -58,13 +68,16 @@ export const TableProperties: React.FC<Props> = ({
       )}
 
       {!isLoading && !getPropertySettings?.data?.length && (
-        <EmptyItems title={`No Properties ${type}s...`} onCreate={onAdd} />
+        <EmptyItems
+          title={`No ${settingsType.toLowerCase()}s...`}
+          onCreate={onAdd}
+        />
       )}
 
       {!isLoading && Boolean(getPropertySettings?.data?.length) && (
         <>
           <SearchAndAdd
-            resource={`Property ${type}`}
+            resource={`${settingsType}`}
             onAdd={onAdd}
             onSearch={handleChangedSearch}
           />

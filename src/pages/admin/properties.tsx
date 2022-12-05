@@ -3,7 +3,6 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
 import React from 'react';
 
-import { withAuth } from '../../common/components/hoc/withAuth';
 import { ModalProperty } from '../../common/components/modals/ModalProperty';
 import { TableProperties } from '../../common/components/tables/TableProperties';
 import { Admin } from '../../common/components/templates/Admin';
@@ -64,4 +63,4 @@ const Properties: NextPageWithLayout = () => {
 
 Properties.getLayout = (page: React.ReactElement) => <Admin>{page}</Admin>;
 
-export default withAuth(Properties);
+export default Properties;

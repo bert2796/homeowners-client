@@ -12,11 +12,13 @@ type Props = {
 type AuthContextProps = {
   token: string;
   user: Data.User | undefined;
+  isInitialized: boolean;
   login?: (params: { username: string; password: string }) => Promise<void>;
   logout?: () => void;
 };
 
 const initialValue: AuthContextProps = {
+  isInitialized: false,
   login: undefined,
   logout: undefined,
   token: '',
@@ -36,14 +38,18 @@ export const AuthProvider = ({ children }: Props) => {
       setIsLoading(true);
 
       if (cookies.token) {
-        // set headers auth
-        setHeadersAuth(cookies.token);
+        try {
+          // set headers auth
+          setHeadersAuth(cookies.token);
 
-        // retrieve user details
-        const { data } = await userAPI.getMe();
+          // retrieve user details
+          const { data } = await userAPI.getMe();
 
-        // set user
-        setUser(data);
+          // set user
+          setUser(data);
+        } catch (error) {
+          logout();
+        }
       }
 
       setIsLoading(false);
@@ -51,16 +57,19 @@ export const AuthProvider = ({ children }: Props) => {
     };
 
     loadUserFromCookies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cookies.token]);
 
   const login = async (params: { username: string; password: string }) => {
-    const { data } = await authAPI.login(params);
-    if (data?.accessToken) {
-      setCookie('token', data.accessToken);
+    try {
+      const { data } = await authAPI.login(params);
+      if (data?.accessToken) {
+        setCookie('token', data.accessToken);
 
-      // set headers auth
-      setHeadersAuth(cookies.token);
-    }
+        // set headers auth
+        setHeadersAuth(cookies.token);
+      }
+    } catch (error) {}
   };
 
   const logout = () => {
@@ -76,7 +85,15 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   return (
-    <AuthContext.Provider value={{ login, logout, token: cookies.token, user }}>
+    <AuthContext.Provider
+      value={{
+        isInitialized: isInit,
+        login,
+        logout,
+        token: cookies.token,
+        user,
+      }}
+    >
       {isInit && !isLoading && children}
     </AuthContext.Provider>
   );

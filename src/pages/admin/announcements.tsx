@@ -3,7 +3,6 @@ import { showNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
 import React from 'react';
 
-import { withAuth } from '../../common/components/hoc/withAuth';
 import { ModalAnnouncement } from '../../common/components/modals/ModalAnnouncement';
 import { TableAnnouncements } from '../../common/components/tables/TableAnnouncements';
 import { Admin } from '../../common/components/templates/Admin';
@@ -64,4 +63,4 @@ const Announcements: NextPageWithLayout = () => {
 
 Announcements.getLayout = (page: React.ReactElement) => <Admin>{page}</Admin>;
 
-export default withAuth(Announcements);
+export default Announcements;

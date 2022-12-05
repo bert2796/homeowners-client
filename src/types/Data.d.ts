@@ -15,7 +15,36 @@ declare namespace Data {
     endDate?: string;
   };
 
+  type Poll = Base & {
+    id: number;
+    title: string;
+    description: string;
+    startDate?: string;
+    endDate?: string;
+    choices?: string[];
+    pollChoices?: PollChoice[];
+  };
+
+  type PollChoice = Base & {
+    id: number;
+    option: string;
+  };
+
   type PropertySettings = {
+    id: number;
+    name: string;
+    display: string;
+    description?: string;
+  };
+
+  type Utility = {
+    id: number;
+    name: string;
+    display: string;
+    description?: string;
+  };
+
+  type ExtraCharge = {
     id: number;
     name: string;
     display: string;
@@ -47,6 +76,6 @@ declare namespace Data {
     middleName: string;
     lastName: string;
     password?: string;
-    role: 'Admin' | 'Tenant';
+    role: 'Admin' | 'Tenant' | 'Staff';
   };
 }

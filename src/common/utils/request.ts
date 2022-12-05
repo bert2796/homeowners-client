@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export const request = axios.create({
+  // baseURL: 'http://localhost:4000',
+
   baseURL: 'https://www.newhomeowner.xyz',
   // baseURL: 'http://137.184.182.0',
   headers: {

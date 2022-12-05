@@ -1,7 +1,6 @@
 import { Box } from '@mantine/core';
 import React from 'react';
 
-import { withAuth } from '../../common/components/hoc/withAuth';
 import { ModalAnnouncement } from '../../common/components/modals/ModalAnnouncement';
 import { TableAnnouncements } from '../../common/components/tables/TableAnnouncements';
 import { Tenant } from '../../common/components/templates/Tenant';
@@ -49,4 +48,4 @@ const Announcements: NextPageWithLayout = () => {
 
 Announcements.getLayout = (page: React.ReactElement) => <Tenant>{page}</Tenant>;
 
-export default withAuth(Announcements);
+export default Announcements;

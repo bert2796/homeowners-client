@@ -92,7 +92,7 @@ export const TableInstance = <T extends {}>(props: Props<T>) => {
         </tbody>
       </Table>
 
-      {table.getRowModel().rows?.length && (
+      {Boolean(table.getRowModel().rows?.length) && (
         <Group mt="md" mx="xs" position="apart">
           <Group>
             <Text c="gray.6">Show</Text>
