@@ -161,7 +161,7 @@ export const TablePayments: React.FC<Props> = ({
       )}
 
       {!isLoading && !getPayments?.data?.length && (
-        <EmptyItems title={`No utilities...`} />
+        <EmptyItems title={`No payments...`} />
       )}
 
       {!isLoading && Boolean(getPayments?.data?.length) && (
