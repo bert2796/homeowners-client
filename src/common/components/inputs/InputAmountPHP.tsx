@@ -14,6 +14,11 @@ export const InputAmountPHP: React.FC<NumberInputProps> = ({
     parser={amountParser}
     value={value}
     onChange={onChange}
+    onKeyPress={(event) => {
+      if (!/^[0-9]*\.?[0-9]*$/.test(event.key)) {
+        event.preventDefault();
+      }
+    }}
     {...rest}
   />
 );

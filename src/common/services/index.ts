@@ -1,6 +1,9 @@
 export * as announcementAPI from './announcement.service';
 export * as authAPI from './auth.service';
 export * as extraChargeAPI from './extra.service';
+export * as leaseAPI from './lease.service';
+export * as leasePaymentAPI from './leasePayments.service';
+export * as paymentAPI from './payment.service';
 export * as pollAPI from './poll.service';
 export * as propertyAPI from './property.service';
 export * as propertyBlockAPI from './propertyBlock.service';

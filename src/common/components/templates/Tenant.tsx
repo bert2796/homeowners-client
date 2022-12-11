@@ -1,7 +1,9 @@
 import {
   IconBuildingWarehouse,
   IconCalendarEvent,
+  IconCash,
   IconDashboard,
+  IconFileCertificate,
   IconNews,
   IconScale,
 } from '@tabler/icons';
@@ -23,6 +25,16 @@ const ITEMS = [
     href: getRoutePath(Routes.TENANT_DASHBOARD),
     icon: IconDashboard,
     label: 'Dashboard',
+  },
+  {
+    href: getRoutePath(Routes.TENANT_LEASES),
+    icon: IconFileCertificate,
+    label: 'Leases',
+  },
+  {
+    href: getRoutePath(Routes.TENANT_PAYMENTS),
+    icon: IconCash,
+    label: 'payments',
   },
   {
     href: getRoutePath(Routes.TENANT_FACILITIES),
@@ -55,6 +67,8 @@ export const Tenant: React.FC<Props> = ({ children }) => {
 
   if (!auth.user) {
     Router.push('/auth/login');
+
+    return null;
   }
 
   if (auth?.user?.role !== 'Tenant') {

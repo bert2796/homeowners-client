@@ -1,7 +1,9 @@
 import {
   IconBuildingWarehouse,
   IconCalendarEvent,
+  IconCash,
   IconDashboard,
+  IconFileCertificate,
   IconHome,
   IconNews,
   IconScale,
@@ -49,6 +51,16 @@ const ITEMS = [
     label: 'Tenants',
   },
   {
+    href: getRoutePath(Routes.ADMIN_LEASES),
+    icon: IconFileCertificate,
+    label: 'Leases',
+  },
+  {
+    href: getRoutePath(Routes.ADMIN_PAYMENTS),
+    icon: IconCash,
+    label: 'Payments',
+  },
+  {
     href: getRoutePath(Routes.ADMIN_ANNOUNCEMENTS),
     icon: IconNews,
     label: 'Announcements',
@@ -79,9 +91,11 @@ export const Admin: React.FC<Props> = ({ children }) => {
 
   if (!auth.user) {
     Router.push('/auth/login');
+
+    return null;
   }
 
-  if (auth?.user?.role !== 'Admin') {
+  if (!['Admin', 'Staff'].includes(auth?.user?.role || '')) {
     return <NotFound />;
   }
 

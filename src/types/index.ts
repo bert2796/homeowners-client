@@ -1,3 +1,4 @@
+import { FileWithPath } from '@mantine/dropzone';
 import { TablerIcon } from '@tabler/icons';
 
 export type MenuItem = {
@@ -35,6 +36,55 @@ export type ExtraChargeCreateParams = Omit<
 >;
 
 export type ExtraChargeEditParams = ExtraChargeCreateParams;
+
+export type LeaseCreateParams = Omit<
+  Data.Lease,
+  | 'id'
+  | 'property'
+  | 'tenant'
+  | 'leaseUtilityCharges'
+  | 'leaseExtraCharges'
+  | 'leasePayments'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+> & {
+  leaseUtilityCharges: { id: number; amount: string }[];
+  leaseExtraCharges: { id: number; amount: string }[];
+};
+
+export type LeaseEditParams = LeaseCreateParams;
+
+export type LeasePaymentCreateParams = Omit<
+  Data.LeasePayment,
+  | 'id'
+  | 'lease'
+  | 'user'
+  | 'userId'
+  | 'leasePaymentImages'
+  | 'status'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+> & {
+  images: FileWithPath[];
+};
+
+export type LeasePaymentEditParams = LeasePaymentCreateParams;
+
+export type PaymentEditParams = Omit<
+  Data.LeasePayment,
+  | 'id'
+  | 'amount'
+  | 'lease'
+  | 'leaseId'
+  | 'user'
+  | 'userId'
+  | 'leasePaymentImages'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+>;
 
 export type PollCreateParams = Omit<
   Data.Poll,

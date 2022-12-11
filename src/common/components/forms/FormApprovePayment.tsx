@@ -1,26 +1,28 @@
 import { Alert, Button, Group, Text } from '@mantine/core';
 import React from 'react';
 
-import { useDeleteExtraCharge } from '../../hooks/api';
+import { useApprovePayment } from '../../hooks/api';
 
 type Props = {
   id: number;
+  type: 'lease' | 'facility';
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };
 
-export const FormDeleteExtraCharge: React.FC<Props> = ({
+export const FormApprovePayment: React.FC<Props> = ({
   id,
+  type,
   onCancel,
   onSuccess,
 }) => {
   const {
-    mutate: deleteExtraCharge,
+    mutate: approvePayment,
     reset,
     isLoading,
     isSuccess,
     isError,
-  } = useDeleteExtraCharge(id);
+  } = useApprovePayment(id, type);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -29,13 +31,13 @@ export const FormDeleteExtraCharge: React.FC<Props> = ({
     // reset error
     reset();
 
-    // delete  utility
-    deleteExtraCharge();
+    // approve payment
+    approvePayment();
   };
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Extra Charge deleted successfully');
+      onSuccess('Payment approved successfully');
 
       onCancel();
     }
@@ -48,14 +50,14 @@ export const FormDeleteExtraCharge: React.FC<Props> = ({
         <Alert
           color="red"
           mb={20}
-          title="Encountered an error while deleting extra charge"
+          title="Encountered an error while approving payment"
         >
           Something went wrong, Please try again later.
         </Alert>
       )}
 
       <form onSubmit={handleFormSubmit}>
-        <Text>Are you sure you want to delete this extra charge ?</Text>
+        <Text>Are you sure you want to approve this payment ?</Text>
 
         <Group mt="md" position="right">
           <Button
@@ -72,7 +74,7 @@ export const FormDeleteExtraCharge: React.FC<Props> = ({
             mt="xl"
             type="submit"
           >
-            Delete
+            Submit
           </Button>
         </Group>
       </form>

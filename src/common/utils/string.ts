@@ -61,3 +61,14 @@ export const generatePassword = () => {
 
   return retVal;
 };
+
+export const getPaymentReason = (name: string) => {
+  switch (name) {
+    case 'transaction_not_found':
+      return 'Transaction Not Found';
+    case 'other':
+      return 'Other';
+    default:
+      return 'Reason not found';
+  }
+};

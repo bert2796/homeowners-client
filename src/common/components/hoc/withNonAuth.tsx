@@ -12,7 +12,7 @@ export const withNonAuth = (Component: NextPageWithLayout) => {
     const auth = useAuth();
 
     if (auth?.user) {
-      if (auth.user.role === 'Admin') {
+      if (['Admin', 'Staff'].includes(auth.user.role)) {
         Router.push(getRoutePath(Routes.ADMIN_DASHBOARD));
       } else if (auth.user.role === 'Tenant') {
         Router.push(getRoutePath(Routes.TENANT_DASHBOARD));

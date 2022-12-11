@@ -1,9 +1,11 @@
 export enum Routes {
   LOGIN = 'LOGIN',
   ADMIN_DASHBOARD = 'ADMIN_DASHBOARD',
+  ADMIN_LEASES = 'ADMIN_LEASES',
   ADMIN_PROPERTIES = 'ADMIN_PROPERTIES',
   ADMIN_FACILITIES = 'ADMIN_FACILITIES',
   ADMIN_RESERVATIONS = 'ADMIN_RESERVATIONS',
+  ADMIN_PAYMENTS = 'ADMIN_PAYMENTS',
   ADMIN_TENANTS = 'ADMIN_TENANTS',
   ADMIN_STAFFS = 'ADMIN_STAFFS',
   ADMIN_ANNOUNCEMENTS = 'ADMIN_ANNOUNCEMENTS',
@@ -12,6 +14,8 @@ export enum Routes {
 
   TENANT_DASHBOARD = 'TENANT_DASHBOARD',
   TENANT_FACILITIES = 'TENANT_FACILITIES',
+  TENANT_LEASES = 'TENANT_LEASES',
+  TENANT_PAYMENTS = 'TENANT_PAYMENTS',
   TENANT_RESERVATIONS = 'TENANT_RESERVATIONS',
   TENANT_ANNOUNCEMENTS = 'TENANT_ANNOUNCEMENTS',
   TENANT_POLLS = 'TENANT_POLLS',
@@ -29,6 +33,12 @@ export const routes: {
   // Admin
   [Routes.ADMIN_DASHBOARD]: {
     path: '/admin/dashboard',
+  },
+  [Routes.ADMIN_LEASES]: {
+    path: '/admin/leases',
+  },
+  [Routes.ADMIN_PAYMENTS]: {
+    path: '/admin/payments',
   },
   [Routes.ADMIN_PROPERTIES]: {
     path: '/admin/properties',
@@ -58,6 +68,12 @@ export const routes: {
   // Tenant
   [Routes.TENANT_DASHBOARD]: {
     path: '/tenant/dashboard',
+  },
+  [Routes.TENANT_LEASES]: {
+    path: '/tenant/leases',
+  },
+  [Routes.TENANT_PAYMENTS]: {
+    path: '/tenant/payments',
   },
   [Routes.TENANT_FACILITIES]: {
     path: '/tenant/facilities',

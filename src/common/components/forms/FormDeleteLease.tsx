@@ -1,7 +1,7 @@
 import { Alert, Button, Group, Text } from '@mantine/core';
 import React from 'react';
 
-import { useDeleteExtraCharge } from '../../hooks/api';
+import { useDeleteLease } from '../../hooks/api';
 
 type Props = {
   id: number;
@@ -9,18 +9,18 @@ type Props = {
   onSuccess: (message: string) => void;
 };
 
-export const FormDeleteExtraCharge: React.FC<Props> = ({
+export const FormDeleteLease: React.FC<Props> = ({
   id,
   onCancel,
   onSuccess,
 }) => {
   const {
-    mutate: deleteExtraCharge,
+    mutate: deleteLease,
     reset,
     isLoading,
     isSuccess,
     isError,
-  } = useDeleteExtraCharge(id);
+  } = useDeleteLease(id);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -29,13 +29,13 @@ export const FormDeleteExtraCharge: React.FC<Props> = ({
     // reset error
     reset();
 
-    // delete  utility
-    deleteExtraCharge();
+    // delete  Lease
+    deleteLease();
   };
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Extra Charge deleted successfully');
+      onSuccess('Lease deleted successfully');
 
       onCancel();
     }
@@ -48,14 +48,14 @@ export const FormDeleteExtraCharge: React.FC<Props> = ({
         <Alert
           color="red"
           mb={20}
-          title="Encountered an error while deleting extra charge"
+          title="Encountered an error while deleting lease"
         >
           Something went wrong, Please try again later.
         </Alert>
       )}
 
       <form onSubmit={handleFormSubmit}>
-        <Text>Are you sure you want to delete this extra charge ?</Text>
+        <Text>Are you sure you want to delete this lease ?</Text>
 
         <Group mt="md" position="right">
           <Button

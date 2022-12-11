@@ -69,7 +69,9 @@ export const AuthProvider = ({ children }: Props) => {
         // set headers auth
         setHeadersAuth(cookies.token);
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   const logout = () => {
