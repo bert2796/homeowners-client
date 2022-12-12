@@ -5,9 +5,12 @@ import React from 'react';
 import { ModalPayment } from '../../common/components/modals/ModalPayment';
 import { TablePayments } from '../../common/components/tables/TablePayments';
 import { Tenant } from '../../common/components/templates/Tenant';
+import { useAuth } from '../../common/hooks';
 import { NextPageWithLayout } from '../_app';
 
 const Payments: NextPageWithLayout = () => {
+  const { user } = useAuth();
+
   const [type, setType] = React.useState<Data.Action>('Create');
   const [paymentType, setPaymentType] = React.useState<'lease' | 'facility'>(
     'lease'
@@ -41,6 +44,7 @@ const Payments: NextPageWithLayout = () => {
     <>
       {/* Extra charges */}
       <TablePayments
+        userId={user?.id}
         onView={(id: number, paymentType: 'lease' | 'facility') =>
           handleOnAction('View Payment', paymentType, id)
         }

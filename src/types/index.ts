@@ -37,6 +37,17 @@ export type ExtraChargeCreateParams = Omit<
 
 export type ExtraChargeEditParams = ExtraChargeCreateParams;
 
+export type FacilityCreateParams = Omit<
+  Data.Facility,
+  'id' | 'facilityPaymentSetting' | 'createdAt' | 'updatedAt' | 'deletedAt'
+> & {
+  type: 'PerHour' | 'WholeDay';
+  amount: string;
+  downPayment?: string;
+};
+
+export type FacilityEditParams = FacilityCreateParams;
+
 export type LeaseCreateParams = Omit<
   Data.Lease,
   | 'id'

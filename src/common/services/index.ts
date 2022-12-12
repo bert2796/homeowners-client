@@ -1,6 +1,7 @@
 export * as announcementAPI from './announcement.service';
 export * as authAPI from './auth.service';
 export * as extraChargeAPI from './extra.service';
+export * as facilityAPI from './facility.service';
 export * as leaseAPI from './lease.service';
 export * as leasePaymentAPI from './leasePayments.service';
 export * as paymentAPI from './payment.service';

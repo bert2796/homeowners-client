@@ -23,6 +23,20 @@ declare namespace Data {
     endDate?: string;
   };
 
+  type Facility = Base & {
+    id: number;
+    name: string;
+    description: string;
+    facilityPaymentSetting: FacilityPaymentSetting;
+  };
+
+  type FacilityPaymentSetting = Base & {
+    id: number;
+    type: 'PerHour' | 'WholeDay';
+    amount: string;
+    downPayment?: string;
+  };
+
   type Lease = Base & {
     id: number;
     property: Property;

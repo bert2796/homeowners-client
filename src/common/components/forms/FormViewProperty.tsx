@@ -44,12 +44,12 @@ export const FormViewProperty: React.FC<Props> = ({ id, onCancel }) => {
         value={property?.propertyType.display || ''}
       />
 
-      <InputAmountPHP
+      {/* <InputAmountPHP
         disabled
         label="Rental Amount"
         mt="md"
         value={parseFloat(property?.amount || '')}
-      />
+      /> */}
 
       <SimpleGrid breakpoints={[{ cols: 1, maxWidth: 'sm' }]} cols={2} mt="md">
         <TextInput

@@ -103,7 +103,8 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
         }
 
         if (key === 'rentalAmount') {
-          return form.values.type === 'Rental' ? !value : false;
+          return false;
+          // return form.values.type === 'Rental' ? !value : false;
         }
 
         return !value;
@@ -314,25 +315,25 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
             label="Type"
             placeholder="ex: Rental or Homeowner"
             onChange={(value) => {
-              if (value === 'Homeowner') {
-                form.setFieldValue('rentalAmount', '');
-              }
+              // if (value === 'Homeowner') {
+              //   form.setFieldValue('rentalAmount', '');
+              // }
 
-              if (value === 'Rental') {
-                const property = getProperties?.data?.find(
-                  (property) => property.id === form.values.propertyId
-                );
-                form.setFieldValue(
-                  'rentalAmount',
-                  `${property?.amount}` || '0'
-                );
-              }
+              // if (value === 'Rental') {
+              //   const property = getProperties?.data?.find(
+              //     (property) => property.id === form.values.propertyId
+              //   );
+              //   form.setFieldValue(
+              //     'rentalAmount',
+              //     `${property?.amount}` || '0'
+              //   );
+              // }
               form.setFieldValue('type', value || '');
             }}
           />
         </SimpleGrid>
 
-        {form.values.type === 'Rental' && (
+        {/* {form.values.type === 'Rental' && (
           <InputAmountPHP
             label="Rental Amount"
             mt="md"
@@ -343,7 +344,7 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
               form.setFieldValue('rentalAmount', `${value}` || '0');
             }}
           />
-        )}
+        )} */}
 
         <DatePicker
           allowFreeInput

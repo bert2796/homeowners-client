@@ -20,12 +20,14 @@ import { EmptyItems } from '../widgets/EmptyItems';
 import { TableInstance } from './TableInstance';
 
 type Props = {
+  userId?: number;
   onApprovePayment?: (id: number, paymentType: 'lease' | 'facility') => void;
   onRejectPayment?: (id: number, paymentType: 'lease' | 'facility') => void;
   onView?: (id: number, paymentType: 'lease' | 'facility') => void;
 };
 
 export const TablePayments: React.FC<Props> = ({
+  userId,
   onApprovePayment,
   onRejectPayment,
   onView,
@@ -34,7 +36,7 @@ export const TablePayments: React.FC<Props> = ({
 
   const { classes } = useStyles();
   const [debounced] = useDebouncedValue(search, 200);
-  const { data: getPayments, isLoading } = useGetPayments();
+  const { data: getPayments, isLoading } = useGetPayments(userId);
 
   const pendingPayments =
     getPayments?.data?.filter((v) => v.status === 'Pending') || [];
@@ -149,8 +151,8 @@ export const TablePayments: React.FC<Props> = ({
     return columns;
   };
 
-  const handleChangedSearch = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setSearch(event.currentTarget.value);
+  // const handleChangedSearch = (event: React.ChangeEvent<HTMLInputElement>) =>
+  //   setSearch(event.currentTarget.value);
 
   return (
     <Paper p="xl">

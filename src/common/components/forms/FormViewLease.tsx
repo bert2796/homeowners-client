@@ -67,14 +67,14 @@ export const FormViewLease: React.FC<Props> = ({ id, onCancel }) => {
         <TextInput disabled label="Type" mt="md" value={form.values.type} />
       </SimpleGrid>
 
-      {form.values.type === 'Rental' && (
+      {/* {form.values.type === 'Rental' && (
         <TextInput
           disabled
           label="Rental Amount"
           mt="md"
           value={form.values.rentalAmount}
         />
-      )}
+      )} */}
 
       <TextInput disabled label="Date" mt="md" value={form.values.date} />
 

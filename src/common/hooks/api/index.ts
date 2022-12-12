@@ -1,5 +1,6 @@
 export * from './announcement';
 export * from './extra';
+export * from './facility';
 export * from './lease';
 export * from './leasePayment';
 export * from './payment';

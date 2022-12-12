@@ -156,12 +156,12 @@ export const FormCreateProperty: React.FC<Props> = ({
           }}
         />
 
-        <InputAmountPHP
+        {/* <InputAmountPHP
           label="Rental Amount"
           mt="md"
           value={parseFloat(form.values.amount)}
           onChange={(value) => form.setFieldValue('amount', `${value}` || '')}
-        />
+        /> */}
 
         <SimpleGrid
           breakpoints={[{ cols: 1, maxWidth: 'sm' }]}
