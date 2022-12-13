@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { FormCreateFacility } from '../forms/FormCreateFacility';
-import { FormDeleteAnnouncement } from '../forms/FormDeleteAnnouncement';
+import { FormDeleteFacility } from '../forms/FormDeleteFacility';
 import { FormEditAnnouncement } from '../forms/FormEditAnnouncement';
-import { FormViewAnnouncement } from '../forms/FormViewAnnouncement';
+import { FormViewFacility } from '../forms/FormViewFacility';
 import { ModalInstance } from './ModalInstance';
 
 type Props = {
@@ -24,14 +24,17 @@ export const ModalFacility: React.FC<Props> = ({
   const title = React.useMemo(() => `${type} Facility`, [type]);
 
   return (
-    <ModalInstance isOpen={isOpen} title={title} onClose={onClose}>
+    <ModalInstance
+      isOpen={isOpen}
+      size={['Create', 'View'].includes(type) ? 'xl' : 'lg'}
+      title={title}
+      onClose={onClose}
+    >
       {type === 'Create' && onSuccess && (
         <FormCreateFacility onCancel={onClose} onSuccess={onSuccess} />
       )}
 
-      {type === 'View' && id && (
-        <FormViewAnnouncement id={id} onCancel={onClose} />
-      )}
+      {type === 'View' && id && <FormViewFacility id={id} onCancel={onClose} />}
 
       {type === 'Edit' && id && onSuccess && (
         <FormEditAnnouncement
@@ -42,11 +45,7 @@ export const ModalFacility: React.FC<Props> = ({
       )}
 
       {type === 'Delete' && id && onSuccess && (
-        <FormDeleteAnnouncement
-          id={id}
-          onCancel={onClose}
-          onSuccess={onSuccess}
-        />
+        <FormDeleteFacility id={id} onCancel={onClose} onSuccess={onSuccess} />
       )}
     </ModalInstance>
   );

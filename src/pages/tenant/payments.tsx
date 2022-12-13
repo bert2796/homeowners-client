@@ -12,7 +12,7 @@ const Payments: NextPageWithLayout = () => {
   const { user } = useAuth();
 
   const [type, setType] = React.useState<Data.Action>('Create');
-  const [paymentType, setPaymentType] = React.useState<'lease' | 'facility'>(
+  const [paymentType, setPaymentType] = React.useState<'lease' | 'reservation'>(
     'lease'
   );
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -29,7 +29,7 @@ const Payments: NextPageWithLayout = () => {
 
   const handleOnAction = (
     type: Data.Action,
-    paymentType: 'lease' | 'facility',
+    paymentType: 'lease' | 'reservation',
     id?: number
   ) => {
     if (id) {
@@ -45,7 +45,7 @@ const Payments: NextPageWithLayout = () => {
       {/* Extra charges */}
       <TablePayments
         userId={user?.id}
-        onView={(id: number, paymentType: 'lease' | 'facility') =>
+        onView={(id: number, paymentType: 'lease' | 'reservation') =>
           handleOnAction('View Payment', paymentType, id)
         }
       />

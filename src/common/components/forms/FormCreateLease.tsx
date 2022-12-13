@@ -82,8 +82,6 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
     ]
   );
 
-  console.log(form.values);
-
   const isSubmitDisabled = React.useMemo(
     () =>
       Object.entries(form.values).some(([key, value]) => {

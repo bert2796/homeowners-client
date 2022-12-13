@@ -5,7 +5,7 @@ import currency from 'currency.js';
 import dayjs from 'dayjs';
 import React from 'react';
 
-import { useGetLeases } from '../../hooks/api';
+import { useGetReservations } from '../../hooks/api';
 import { ActionButton } from '../widgets/ActionButton';
 import { EmptyItems } from '../widgets/EmptyItems';
 import { SearchAndAdd } from '../widgets/SearchAndAdd';
@@ -21,7 +21,7 @@ type Props = {
   onViewPayment?: (id: number) => void;
 };
 
-export const TableLeases: React.FC<Props> = ({
+export const TableReservations: React.FC<Props> = ({
   userId,
   onAdd,
   onDelete,
@@ -34,9 +34,9 @@ export const TableLeases: React.FC<Props> = ({
 
   const { classes } = useStyles();
   const [debounced] = useDebouncedValue(search, 200);
-  const { data: getLeases, isLoading } = useGetLeases(userId);
+  const { data: getReservations, isLoading } = useGetReservations(userId);
 
-  const columns = React.useMemo<ColumnDef<Data.Lease>[]>(
+  const columns = React.useMemo<ColumnDef<Data.Reservation>[]>(
     () => [
       {
         cell: ({ row }) => (
@@ -47,12 +47,8 @@ export const TableLeases: React.FC<Props> = ({
         header: 'TENANT',
       },
       {
-        cell: ({ row }) => (
-          <Text>
-            {row.original.property.code}: {row.original.property.name}
-          </Text>
-        ),
-        header: 'PROPERTY',
+        cell: ({ row }) => <Text>{row.original.facility.name}</Text>,
+        header: 'FACILITY',
       },
       {
         cell: ({ row }) => (
@@ -68,15 +64,25 @@ export const TableLeases: React.FC<Props> = ({
       },
       {
         cell: ({ row }) => (
-          <Text>{dayjs(row.original.date).format('MM/DD/YYYY')}</Text>
+          <Text>
+            {dayjs(row.original.startDate).format('MMM D, YYYY h:mm A')}
+          </Text>
         ),
-        header: 'DATE',
+        header: 'START DATE',
+      },
+      {
+        cell: ({ row }) => (
+          <Text>
+            {dayjs(row.original.endDate).format('MMM D, YYYY h:mm A')}
+          </Text>
+        ),
+        header: 'END DATE',
       },
       ...(userId
         ? [
             {
-              cell: ({ row }: CellContext<Data.Lease, unknown>) => {
-                const payments = row.original.leasePayments;
+              cell: ({ row }: CellContext<Data.Reservation, unknown>) => {
+                const payments = row.original.reservationPayments;
 
                 let color: 'gray' | 'red' | 'blue' | 'green' = 'red';
                 const status = payments?.length ? payments[0].status : 'None';
@@ -103,9 +109,12 @@ export const TableLeases: React.FC<Props> = ({
         : []),
       {
         cell: ({ row }) => {
-          const lease = row.original;
-          if (userId && lease?.leasePayments?.[0]?.status === 'Pending') {
-            const leasePayment = lease.leasePayments[0];
+          const reservation = row.original;
+          if (
+            userId &&
+            reservation?.reservationPayments?.[0]?.status === 'Pending'
+          ) {
+            const reservationPayment = reservation.reservationPayments[0];
 
             return (
               <ActionButton
@@ -114,24 +123,27 @@ export const TableLeases: React.FC<Props> = ({
                 onEdit={onEdit}
                 onView={onView}
                 onViewPayment={() => {
-                  if (leasePayment && onViewPayment) {
-                    onViewPayment(leasePayment.id);
+                  if (reservationPayment && onViewPayment) {
+                    onViewPayment(reservationPayment.id);
                   }
                 }}
               />
             );
           }
 
-          if (userId && lease?.leasePayments?.[0]?.status === 'Approved') {
-            const leasePayment = lease.leasePayments[0];
+          if (
+            userId &&
+            reservation?.reservationPayments?.[0]?.status === 'Approved'
+          ) {
+            const reservationPayment = reservation.reservationPayments[0];
 
             return (
               <ActionButton
                 id={row.original.id}
                 onView={onView}
                 onViewPayment={() => {
-                  if (leasePayment && onViewPayment) {
-                    onViewPayment(leasePayment.id);
+                  if (reservationPayment && onViewPayment) {
+                    onViewPayment(reservationPayment.id);
                   }
                 }}
               />
@@ -165,20 +177,20 @@ export const TableLeases: React.FC<Props> = ({
         </div>
       )}
 
-      {!isLoading && !getLeases?.data?.length && (
-        <EmptyItems title={'No leases...'} onCreate={onAdd} />
+      {!isLoading && !getReservations?.data?.length && (
+        <EmptyItems title={'No reservations...'} onCreate={onAdd} />
       )}
 
-      {!isLoading && Boolean(getLeases?.data?.length) && (
+      {!isLoading && Boolean(getReservations?.data?.length) && (
         <>
           <SearchAndAdd
-            resource="Lease"
+            resource="Reservation"
             onAdd={onAdd}
             onSearch={handleChangedSearch}
           />
           <TableInstance
             columns={columns}
-            data={getLeases?.data || []}
+            data={getReservations?.data || []}
             state={{ globalFilter: debounced }}
             onGlobalFilterChange={setSearch}
           />

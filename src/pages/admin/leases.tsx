@@ -44,7 +44,7 @@ const Leases: NextPageWithLayout = () => {
         <TableLeases
           onAdd={() => handleOnAction('Create')}
           onDelete={(id: number) => handleOnAction('Delete', id)}
-          onEdit={(id: number) => handleOnAction('Edit', id)}
+          // onEdit={(id: number) => handleOnAction('Edit', id)}
           onView={(id: number) => handleOnAction('View', id)}
         />
       </Box>

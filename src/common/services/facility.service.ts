@@ -18,8 +18,23 @@ export const getFacility = async (id: number) => {
 };
 
 export const createFacility = async (params: FacilityCreateParams) => {
+  const formData = new FormData();
+
+  formData.append('name', params.name);
+  formData.append('description', params.description);
+  formData.append('type', params.type);
+  formData.append('amount', params.amount);
+  formData.append('downPayment', `${params.downPayment}`);
+
+  params.images.forEach((image) => {
+    formData.append('images', image);
+  });
+
   return await request<Data.Facility>({
-    data: params,
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
     method: 'POST',
     url: path,
   });

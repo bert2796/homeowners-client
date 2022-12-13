@@ -1,28 +1,26 @@
 import { Alert, Button, Group, Text } from '@mantine/core';
 import React from 'react';
 
-import { useApprovePayment } from '../../hooks/api';
+import { useDeleteFacility } from '../../hooks/api';
 
 type Props = {
   id: number;
-  type: 'lease' | 'reservation';
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };
 
-export const FormApprovePayment: React.FC<Props> = ({
+export const FormDeleteFacility: React.FC<Props> = ({
   id,
-  type,
   onCancel,
   onSuccess,
 }) => {
   const {
-    mutate: approvePayment,
+    mutate: deleteFacility,
     reset,
     isLoading,
     isSuccess,
     isError,
-  } = useApprovePayment(id, type);
+  } = useDeleteFacility(id);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -31,13 +29,13 @@ export const FormApprovePayment: React.FC<Props> = ({
     // reset error
     reset();
 
-    // approve payment
-    approvePayment();
+    // delete property
+    deleteFacility();
   };
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Payment approved successfully');
+      onSuccess('Facility deleted successfully');
 
       onCancel();
     }
@@ -50,14 +48,14 @@ export const FormApprovePayment: React.FC<Props> = ({
         <Alert
           color="red"
           mb={20}
-          title="Encountered an error while approving payment"
+          title="Encountered an error while deleting facility"
         >
           Something went wrong, Please try again later.
         </Alert>
       )}
 
       <form onSubmit={handleFormSubmit}>
-        <Text>Are you sure you want to approve this payment ?</Text>
+        <Text>Are you sure you want to delete this facility ?</Text>
 
         <Group mt="md" position="right">
           <Button
@@ -74,7 +72,7 @@ export const FormApprovePayment: React.FC<Props> = ({
             mt="xl"
             type="submit"
           >
-            Submit
+            Delete
           </Button>
         </Group>
       </form>

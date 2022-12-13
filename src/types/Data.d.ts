@@ -28,6 +28,7 @@ declare namespace Data {
     name: string;
     description: string;
     facilityPaymentSetting: FacilityPaymentSetting;
+    facilityImages: FacilityImage[];
   };
 
   type FacilityPaymentSetting = Base & {
@@ -35,6 +36,11 @@ declare namespace Data {
     type: 'PerHour' | 'WholeDay';
     amount: string;
     downPayment?: string;
+  };
+
+  type FacilityImage = Base & {
+    id: number;
+    url: string;
   };
 
   type Lease = Base & {
@@ -84,6 +90,40 @@ declare namespace Data {
     amount: string;
   };
 
+  type LeasePaymentImage = Base & {
+    url: string;
+  };
+
+  type Reservation = Base & {
+    id: number;
+    facility: Facility;
+    tenant: User;
+    reservationPayments: ReservationPayment[];
+    facilityId: number;
+    tenantId: number;
+    totalAmount: string;
+    startDate: string;
+    endDate: string;
+  };
+
+  type ReservationPayment = Base & {
+    id: number;
+    reservation: Reservation;
+    reservationId: number;
+    user: User;
+    userId: number;
+    reservationPaymentImages: ReservationPaymentImage[];
+    status: 'Approved' | 'Rejected' | 'Pending';
+    reason?: string;
+    otherReason?: string;
+    otherReasonDetails?: string;
+    amount: string;
+  };
+
+  type ReservationPaymentImage = Base & {
+    url: string;
+  };
+
   type Payment = Base & {
     id: number;
     date: string;
@@ -91,12 +131,8 @@ declare namespace Data {
     user: User;
     amount: string;
     status: 'Approved' | 'Rejected' | 'Pending';
-    paymentType: 'lease' | 'facility';
+    paymentType: 'lease' | 'reservation';
     images: LeasePaymentImage[];
-  };
-
-  type LeasePaymentImage = Base & {
-    url: string;
   };
 
   type Poll = Base & {

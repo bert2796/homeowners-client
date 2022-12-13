@@ -14,7 +14,7 @@ import { useRejectPayment } from '../../hooks/api';
 
 type Props = {
   id: number;
-  type: 'lease' | 'facility';
+  type: 'lease' | 'reservation';
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };

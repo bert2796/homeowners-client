@@ -36,6 +36,7 @@ export const useCreateLeasePayment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['getPayments']);
       queryClient.invalidateQueries(['getLeasePayments']);
+      queryClient.invalidateQueries(['getLeases']);
     },
   });
 };

@@ -39,11 +39,17 @@ export type ExtraChargeEditParams = ExtraChargeCreateParams;
 
 export type FacilityCreateParams = Omit<
   Data.Facility,
-  'id' | 'facilityPaymentSetting' | 'createdAt' | 'updatedAt' | 'deletedAt'
+  | 'id'
+  | 'facilityPaymentSetting'
+  | 'facilityImages'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
 > & {
   type: 'PerHour' | 'WholeDay';
   amount: string;
   downPayment?: string;
+  images: FileWithPath[];
 };
 
 export type FacilityEditParams = FacilityCreateParams;
@@ -66,6 +72,19 @@ export type LeaseCreateParams = Omit<
 
 export type LeaseEditParams = LeaseCreateParams;
 
+export type ReservationCreateParams = Omit<
+  Data.Reservation,
+  | 'id'
+  | 'facility'
+  | 'tenant'
+  | 'reservationPayments'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+>;
+
+export type ReservationEditParams = ReservationCreateParams;
+
 export type LeasePaymentCreateParams = Omit<
   Data.LeasePayment,
   | 'id'
@@ -82,6 +101,23 @@ export type LeasePaymentCreateParams = Omit<
 };
 
 export type LeasePaymentEditParams = LeasePaymentCreateParams;
+
+export type ReservationPaymentCreateParams = Omit<
+  Data.ReservationPayment,
+  | 'id'
+  | 'reservation'
+  | 'user'
+  | 'userId'
+  | 'reservationPaymentImages'
+  | 'status'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'deletedAt'
+> & {
+  images: FileWithPath[];
+};
+
+export type ReservationPaymentEditParams = ReservationPaymentCreateParams;
 
 export type PaymentEditParams = Omit<
   Data.LeasePayment,

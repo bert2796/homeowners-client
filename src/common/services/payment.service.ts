@@ -22,7 +22,7 @@ export const getPayment = async (id: number) => {
 };
 
 export const editPayment = async (
-  type: 'lease' | 'facility',
+  type: 'lease' | 'reservation',
   id: number,
   params: PaymentEditParams
 ) => {

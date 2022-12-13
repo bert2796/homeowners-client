@@ -4,6 +4,7 @@ import React from 'react';
 type Props = {
   title: string;
   isOpen: boolean;
+  fullScreen?: boolean;
   size?: MantineSize;
   overflow?: 'inside' | 'outside';
   onClose: () => void;
@@ -13,6 +14,7 @@ type Props = {
 export const ModalInstance: React.FC<Props> = ({
   title,
   isOpen,
+  fullScreen,
   size,
   overflow,
   onClose,
@@ -25,6 +27,7 @@ export const ModalInstance: React.FC<Props> = ({
     <Modal
       centered
       closeOnClickOutside={false}
+      fullScreen={fullScreen}
       opened={isOpen}
       overflow={overflow}
       overlayBlur={3}

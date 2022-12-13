@@ -21,9 +21,9 @@ import { TableInstance } from './TableInstance';
 
 type Props = {
   userId?: number;
-  onApprovePayment?: (id: number, paymentType: 'lease' | 'facility') => void;
-  onRejectPayment?: (id: number, paymentType: 'lease' | 'facility') => void;
-  onView?: (id: number, paymentType: 'lease' | 'facility') => void;
+  onApprovePayment?: (id: number, paymentType: 'lease' | 'reservation') => void;
+  onRejectPayment?: (id: number, paymentType: 'lease' | 'reservation') => void;
+  onView?: (id: number, paymentType: 'lease' | 'reservation') => void;
 };
 
 export const TablePayments: React.FC<Props> = ({
@@ -62,24 +62,25 @@ export const TablePayments: React.FC<Props> = ({
         cell: ({ row }) => {
           const payment = row.original;
 
-          let color: 'gray' | 'red' | 'blue' | 'green' = 'red';
+          let color: 'yellow' | 'violet' = 'yellow';
           if (payment.paymentType === 'lease') {
-            color = 'blue';
+            color = 'yellow';
           } else {
-            color = 'gray';
+            color = 'violet';
           }
 
           return (
-            <Badge color={color} variant="filled">
+            <Badge color={color} variant="outline">
               {payment.paymentType}
             </Badge>
           );
         },
-        header: 'PAYMENT TYPE',
+        header: 'PAYMENT TYPE TYPE',
       },
       {
         cell: ({ row }) => (
           <Text>
+            PHP{' '}
             {currency(row.original.amount, {
               precision: 2,
               symbol: '',
@@ -122,20 +123,22 @@ export const TablePayments: React.FC<Props> = ({
           return (
             <ActionButton
               id={payment.id}
-              {...(params?.showApproveButton && {
-                onApprovePayment: () => {
-                  if (onApprovePayment) {
-                    onApprovePayment(payment.id, payment.paymentType);
-                  }
-                },
-              })}
-              {...(params?.showRejectButton && {
-                onRejectPayment: () => {
-                  if (onRejectPayment) {
-                    onRejectPayment(payment.id, payment.paymentType);
-                  }
-                },
-              })}
+              {...(params?.showApproveButton &&
+                onApprovePayment && {
+                  onApprovePayment: () => {
+                    if (onApprovePayment) {
+                      onApprovePayment(payment.id, payment.paymentType);
+                    }
+                  },
+                })}
+              {...(params?.showRejectButton &&
+                onRejectPayment && {
+                  onRejectPayment: () => {
+                    if (onRejectPayment) {
+                      onRejectPayment(payment.id, payment.paymentType);
+                    }
+                  },
+                })}
               onView={() => {
                 if (onView) {
                   onView(payment.id, payment.paymentType);

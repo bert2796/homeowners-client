@@ -51,11 +51,11 @@ const ITEMS = [
     icon: IconNews,
     label: 'Announcements',
   },
-  {
-    href: getRoutePath(Routes.TENANT_POLLS),
-    icon: IconScale,
-    label: 'Polls',
-  },
+  // {
+  //   href: getRoutePath(Routes.TENANT_POLLS),
+  //   icon: IconScale,
+  //   label: 'Polls',
+  // },
 ];
 
 export const Tenant: React.FC<Props> = ({ children }) => {

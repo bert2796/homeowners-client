@@ -24,7 +24,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const ITEMS = [
+const getTabs = (isStaff: boolean) => [
   {
     href: getRoutePath(Routes.ADMIN_DASHBOARD),
     icon: IconDashboard,
@@ -65,21 +65,25 @@ const ITEMS = [
     icon: IconNews,
     label: 'Announcements',
   },
-  {
-    href: getRoutePath(Routes.ADMIN_POLLS),
-    icon: IconScale,
-    label: 'Polls',
-  },
-  {
-    href: getRoutePath(Routes.ADMIN_STAFFS),
-    icon: IconUsers,
-    label: 'Staffs',
-  },
-  {
-    href: getRoutePath(Routes.ADMIN_SETTINGS),
-    icon: IconSettings,
-    label: 'Settings',
-  },
+  // {
+  //   href: getRoutePath(Routes.ADMIN_POLLS),
+  //   icon: IconScale,
+  //   label: 'Polls',
+  // },
+  ...(!isStaff
+    ? [
+        {
+          href: getRoutePath(Routes.ADMIN_STAFFS),
+          icon: IconUsers,
+          label: 'Staffs',
+        },
+        {
+          href: getRoutePath(Routes.ADMIN_SETTINGS),
+          icon: IconSettings,
+          label: 'Settings',
+        },
+      ]
+    : []),
 ];
 
 export const Admin: React.FC<Props> = ({ children }) => {
@@ -104,7 +108,7 @@ export const Admin: React.FC<Props> = ({ children }) => {
       <>
         <DashboardLayout
           headerLink={getRoutePath(Routes.ADMIN_DASHBOARD)}
-          items={ITEMS}
+          items={getTabs(auth.user.role === 'Staff')}
         >
           {children}
         </DashboardLayout>

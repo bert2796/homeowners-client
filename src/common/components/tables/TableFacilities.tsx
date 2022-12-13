@@ -1,6 +1,7 @@
-import { createStyles, Loader, Paper, Text } from '@mantine/core';
+import { Badge, createStyles, Loader, Paper, Text } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { ColumnDef } from '@tanstack/react-table';
+import currency from 'currency.js';
 import dayjs from 'dayjs';
 import React from 'react';
 
@@ -35,22 +36,58 @@ export const TableFacilities: React.FC<Props> = ({
         accessorKey: 'name',
         header: 'NAME',
       },
-      // {
-      //   cell: ({ row }) => (
-      //     <Text>{dayjs(row.original.startDate).format('MM/DD/YYYY')}</Text>
-      //   ),
-      //   header: 'START DATE',
-      // },
-      // {
-      //   cell: ({ row }) => (
-      //     <Text>{dayjs(row.original.endDate).format('MM/DD/YYYY')}</Text>
-      //   ),
-      //   header: 'END DATE',
-      // },
-      // {
-      //   accessorKey: 'location',
-      //   header: 'LOCATION',
-      // },
+      {
+        cell: ({ row }) => {
+          const facility = row.original;
+
+          let color: 'yellow' | 'violet' = 'yellow';
+          if (facility.facilityPaymentSetting.type === 'PerHour') {
+            color = 'yellow';
+          } else {
+            color = 'violet';
+          }
+
+          return (
+            <Badge color={color} variant="outline">
+              {facility.facilityPaymentSetting.type === 'PerHour'
+                ? 'Per Hour'
+                : 'Whole Day'}
+            </Badge>
+          );
+        },
+        header: 'PAYMENT RATE',
+      },
+      {
+        cell: ({ row }) => (
+          <Text>
+            PHP{' '}
+            {currency(row.original.facilityPaymentSetting.amount, {
+              precision: 2,
+              symbol: '',
+            }).format()}
+          </Text>
+        ),
+        header: 'AMOUNT',
+      },
+      {
+        cell: ({ row }) => {
+          const downPayment = row.original.facilityPaymentSetting.downPayment;
+
+          return (
+            <Text>
+              {downPayment &&
+                `PHP ${currency(downPayment, { precision: 2, symbol: '' })}`}
+
+              {!downPayment && (
+                <Badge color="red" variant="filled">
+                  N/A
+                </Badge>
+              )}
+            </Text>
+          );
+        },
+        header: 'DOWN PAYMENT',
+      },
       {
         cell: ({ row }) => (
           <Text>{dayjs(row.original.createdAt).format('MM/DD/YYYY')}</Text>

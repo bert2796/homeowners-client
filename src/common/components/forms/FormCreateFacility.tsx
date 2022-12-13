@@ -41,6 +41,7 @@ export const FormCreateFacility: React.FC<Props> = ({
       amount: '',
       description: '',
       downPayment: '',
+      images: [],
       name: '',
       type: 'PerHour',
     },
@@ -50,8 +51,8 @@ export const FormCreateFacility: React.FC<Props> = ({
     () =>
       Object.entries(form.values).some(([key, value]) =>
         key === 'description' || key === 'downPayment' ? false : !value
-      ),
-    [form.values]
+      ) || !files.length,
+    [files.length, form.values]
   );
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -65,7 +66,10 @@ export const FormCreateFacility: React.FC<Props> = ({
     form.validate();
 
     if (!Object.keys(form.errors).length) {
-      createFacility(form.values);
+      createFacility({
+        ...form.values,
+        images: files,
+      });
     }
   };
 
@@ -122,7 +126,7 @@ export const FormCreateFacility: React.FC<Props> = ({
               { label: 'Per Hour', value: 'PerHour' },
               { label: 'Whole Day', value: 'WholeDay' },
             ]}
-            label="Payment Type"
+            label="Payment Rate Type"
             onChange={(value) => {
               form.setFieldValue(
                 'type',
@@ -133,10 +137,20 @@ export const FormCreateFacility: React.FC<Props> = ({
 
           <InputAmountPHP
             label="Amount"
-            value={parseFloat(form.values.amount)}
+            // value={parseFloat(form.values.amount)}
             onChange={(value) => form.setFieldValue('amount', `${value}` || '')}
           />
         </SimpleGrid>
+
+        {form.values.type === 'WholeDay' && (
+          <InputAmountPHP
+            label="Down Payment"
+            mt="md"
+            onChange={(value) =>
+              form.setFieldValue('downPayment', `${value}` || '')
+            }
+          />
+        )}
 
         <Text mb="md" mt="md">
           Upload facility images

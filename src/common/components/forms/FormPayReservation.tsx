@@ -3,8 +3,8 @@ import { FileWithPath } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
-import { LeasePaymentCreateParams } from '../../../types';
-import { useCreateLeasePayment } from '../../hooks/api';
+import { ReservationPaymentCreateParams } from '../../../types';
+import { useCreateReservationPayment } from '../../hooks/api';
 import { InputAmountPHP } from '../inputs/InputAmountPHP';
 import { PaymentUploader } from '../uploaders/PaymentUploader';
 import { Loader } from '../widgets/Loader';
@@ -15,21 +15,25 @@ type Props = {
   onSuccess: (message: string) => void;
 };
 
-export const FormPayLease: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
+export const FormPayReservation: React.FC<Props> = ({
+  id,
+  onCancel,
+  onSuccess,
+}) => {
   const [files, setFiles] = React.useState<FileWithPath[]>([]);
 
   const {
-    mutate: createLeasePayment,
+    mutate: createReservationPayment,
     reset,
     isLoading,
     isSuccess,
     isError,
-  } = useCreateLeasePayment();
-  const form = useForm<LeasePaymentCreateParams>({
+  } = useCreateReservationPayment();
+  const form = useForm<ReservationPaymentCreateParams>({
     initialValues: {
       amount: '',
       images: [],
-      leaseId: id,
+      reservationId: id,
     },
   });
 
@@ -52,7 +56,7 @@ export const FormPayLease: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
     form.validate();
 
     if (!Object.keys(form.errors).length) {
-      createLeasePayment({
+      createReservationPayment({
         ...form.values,
         images: files,
       });
@@ -61,7 +65,7 @@ export const FormPayLease: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Payment for lease submitted successfully');
+      onSuccess('Payment for reservation submitted successfully');
 
       onCancel();
     }

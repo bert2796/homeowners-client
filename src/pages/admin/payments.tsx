@@ -9,7 +9,7 @@ import { NextPageWithLayout } from '../_app';
 
 const Payments: NextPageWithLayout = () => {
   const [type, setType] = React.useState<Data.Action>('Create');
-  const [paymentType, setPaymentType] = React.useState<'lease' | 'facility'>(
+  const [paymentType, setPaymentType] = React.useState<'lease' | 'reservation'>(
     'lease'
   );
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -26,7 +26,7 @@ const Payments: NextPageWithLayout = () => {
 
   const handleOnAction = (
     type: Data.Action,
-    paymentType: 'lease' | 'facility',
+    paymentType: 'lease' | 'reservation',
     id?: number
   ) => {
     if (id) {
@@ -34,6 +34,7 @@ const Payments: NextPageWithLayout = () => {
     }
 
     setType(type);
+    setPaymentType(paymentType);
     setIsModalOpen(true);
   };
 
@@ -41,13 +42,13 @@ const Payments: NextPageWithLayout = () => {
     <>
       {/* Extra charges */}
       <TablePayments
-        onApprovePayment={(id: number, paymentType: 'lease' | 'facility') =>
+        onApprovePayment={(id: number, paymentType: 'lease' | 'reservation') =>
           handleOnAction('Approve Payment', paymentType, id)
         }
-        onRejectPayment={(id: number, paymentType: 'lease' | 'facility') =>
+        onRejectPayment={(id: number, paymentType: 'lease' | 'reservation') =>
           handleOnAction('Reject Payment', paymentType, id)
         }
-        onView={(id: number, paymentType: 'lease' | 'facility') =>
+        onView={(id: number, paymentType: 'lease' | 'reservation') =>
           handleOnAction('View Payment', paymentType, id)
         }
       />

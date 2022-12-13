@@ -17,7 +17,10 @@ export const useGetPayment = (id: number) =>
     queryKey: ['getPayment', id],
   });
 
-export const useApprovePayment = (id: number, type: 'lease' | 'facility') => {
+export const useApprovePayment = (
+  id: number,
+  type: 'lease' | 'reservation'
+) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -40,7 +43,7 @@ export const useApprovePayment = (id: number, type: 'lease' | 'facility') => {
 
 export const useRejectPayment = (
   id: number,
-  type: 'lease' | 'facility',
+  type: 'lease' | 'reservation',
   data: PaymentEditParams
 ) => {
   const queryClient = useQueryClient();
