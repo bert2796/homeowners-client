@@ -18,7 +18,7 @@ import { NextPageWithLayout } from '../_app';
 
 const Reservations: NextPageWithLayout = () => {
   const { user } = useAuth();
-  const { data: getReservations } = useGetReservations(user?.id);
+  const { data: getReservations } = useGetReservations();
 
   const [selectedDate, setSelectedDate] = React.useState<DateSelectArg>();
   const [selectedFacility, setSelectedFacility] =

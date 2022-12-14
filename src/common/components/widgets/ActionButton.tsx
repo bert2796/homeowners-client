@@ -11,6 +11,8 @@ type Props = {
   onRejectPayment?: (id: number) => void;
   onView?: (id: number) => void;
   onViewPayment?: (id: number) => void;
+  onViewResult?: (id: number) => void;
+  onVote?: (id: number) => void;
 };
 
 export const ActionButton: React.FC<Props> = ({
@@ -22,6 +24,8 @@ export const ActionButton: React.FC<Props> = ({
   onRejectPayment,
   onView,
   onViewPayment,
+  onViewResult,
+  onVote,
 }) => (
   <Menu shadow="md" width={103}>
     <Menu.Target>
@@ -35,6 +39,13 @@ export const ActionButton: React.FC<Props> = ({
     </Menu.Target>
 
     <Menu.Dropdown>
+      {/* vote related */}
+      {onVote && <Menu.Item onClick={() => onVote(id)}>Vote</Menu.Item>}
+
+      {onViewResult && (
+        <Menu.Item onClick={() => onViewResult(id)}>View Result</Menu.Item>
+      )}
+
       {/* payment related */}
       {onApprovePayment && (
         <Menu.Item onClick={() => onApprovePayment(id)}>

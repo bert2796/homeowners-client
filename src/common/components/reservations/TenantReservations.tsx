@@ -82,7 +82,6 @@ export const TenantReservation: React.FC<Props> = (props) => {
             slotMaxTime="24:00:00"
             slotMinTime="00:00:00"
             unselectAuto={false}
-            validRange={{ start: new Date() }}
           />
         )}
       </Box>

@@ -63,7 +63,6 @@ export const AdminReservationsCalendar: React.FC<Props> = (props) => {
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             slotMaxTime="24:00:00"
             slotMinTime="00:00:00"
-            validRange={{ start: new Date() }}
           />
         )}
       </Box>

@@ -7,7 +7,7 @@ export const useGetReservations = (userId?: number) =>
   useQuery({
     keepPreviousData: true,
     queryFn: () => reservationAPI.getReservations(userId),
-    queryKey: ['getReservations'],
+    queryKey: ['getReservations', userId ? 'me' : ''],
     staleTime: 2000,
   });
 
@@ -31,6 +31,7 @@ export const useCreateReservation = () => {
       return previousData;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(['getReservations', 'me']);
       queryClient.invalidateQueries(['getReservations']);
     },
   });

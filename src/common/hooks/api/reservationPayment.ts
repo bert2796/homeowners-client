@@ -36,6 +36,7 @@ export const useCreateReservationPayment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['getPayments']);
       queryClient.invalidateQueries(['getReservationPayments']);
+      queryClient.invalidateQueries(['getReservations', 'me']);
       queryClient.invalidateQueries(['getReservations']);
     },
   });

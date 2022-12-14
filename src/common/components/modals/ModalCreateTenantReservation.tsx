@@ -2,11 +2,14 @@ import { DateSelectArg } from '@fullcalendar/common';
 import { Button, Group, SimpleGrid, TextInput } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import day from 'dayjs';
+import isSafeOrAfter from 'dayjs/plugin/isSameOrAfter';
 import React from 'react';
 
 import { useAuth } from '../../hooks';
 import { useCreateReservation } from '../../hooks/api';
 import { ModalInstance } from './ModalInstance';
+
+day.extend(isSafeOrAfter);
 
 type Props = {
   facility?: Data.Facility;
@@ -29,8 +32,12 @@ export const ModalCreateTenantReservation: React.FC<Props> = ({
     reset,
     isLoading,
     isSuccess,
-    isError,
   } = useCreateReservation();
+
+  const isPastDate = React.useMemo(
+    () => !day(date?.start).isSameOrAfter(new Date()),
+    [date?.start]
+  );
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -76,6 +83,7 @@ export const ModalCreateTenantReservation: React.FC<Props> = ({
         >
           <TextInput
             disabled
+            error={isPastDate ? 'Cannot reserve if its past date' : ''}
             label="Start Date"
             value={day(date?.start).format('MM/DD/YYYY')}
           />
@@ -107,7 +115,7 @@ export const ModalCreateTenantReservation: React.FC<Props> = ({
             Cancel
           </Button>
           <Button
-            disabled={isLoading}
+            disabled={isLoading || isPastDate}
             loading={isLoading}
             mt="xl"
             type="submit"

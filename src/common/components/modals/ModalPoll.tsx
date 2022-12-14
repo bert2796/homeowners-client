@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { FormCreateProperty } from '../forms/FormCreateProperty';
+import { FormCreatePoll } from '../forms/FormCreatePoll';
 import { FormDeletePoll } from '../forms/FormDeletePoll';
-import { FormViewProperty } from '../forms/FormViewProperty';
+import { FormViewPoll } from '../forms/FormViewPoll';
+import { FormVotePoll } from '../forms/FormVotePoll';
 import { ModalInstance } from './ModalInstance';
 
 type Props = {
@@ -25,10 +26,12 @@ export const ModalPoll: React.FC<Props> = ({
   return (
     <ModalInstance isOpen={isOpen} title={title} onClose={onClose}>
       {type === 'Create' && (
-        <FormCreateProperty onCancel={onClose} onSuccess={onSuccess} />
+        <FormCreatePoll onCancel={onClose} onSuccess={onSuccess} />
       )}
 
-      {type === 'View' && id && <FormViewProperty id={id} onCancel={onClose} />}
+      {type === 'View' && id && <FormViewPoll id={id} onCancel={onClose} />}
+
+      {type === 'Vote' && id && <FormVotePoll id={id} onCancel={onClose} />}
 
       {type === 'Delete' && id && (
         <FormDeletePoll id={id} onCancel={onClose} onSuccess={onSuccess} />

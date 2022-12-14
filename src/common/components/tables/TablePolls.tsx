@@ -1,6 +1,6 @@
 import { createStyles, Loader, Paper, Text } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
-import { ColumnDef } from '@tanstack/react-table';
+import { CellContext, ColumnDef } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import React from 'react';
 
@@ -14,9 +14,17 @@ type Props = {
   onAdd?: () => void;
   onDelete?: (id: number) => void;
   onView?: (id: number) => void;
+  onViewResult?: (id: number) => void;
+  onVote?: (id: number) => void;
 };
 
-export const TablePolls: React.FC<Props> = ({ onAdd, onDelete, onView }) => {
+export const TablePolls: React.FC<Props> = ({
+  onAdd,
+  onDelete,
+  onView,
+  onViewResult,
+  onVote,
+}) => {
   const [search, setSearch] = React.useState('');
 
   const { classes } = useStyles();
@@ -31,6 +39,16 @@ export const TablePolls: React.FC<Props> = ({ onAdd, onDelete, onView }) => {
       },
       {
         cell: ({ row }) => (
+          <Text>{row.original?.pollChoices?.length || 0}</Text>
+        ),
+        header: 'CHOICES',
+      },
+      {
+        cell: ({ row }) => <Text>{row.original?.allowedAnswer || 0}</Text>,
+        header: 'ALLOWED ANSWER',
+      },
+      {
+        cell: ({ row }) => (
           <Text>{dayjs(row.original.endDate).format('MM/DD/YYYY')}</Text>
         ),
         header: 'END DATE',
@@ -41,18 +59,30 @@ export const TablePolls: React.FC<Props> = ({ onAdd, onDelete, onView }) => {
         ),
         header: 'DATE ADDED',
       },
+      ...(onVote
+        ? [
+            {
+              cell: ({ row }: CellContext<Data.Poll, unknown>) => (
+                <Text>{row.original?.allowedAnswer || 0}</Text>
+              ),
+              header: 'ALLOWED ANSWER',
+            },
+          ]
+        : []),
       {
         cell: ({ row }) => (
           <ActionButton
             id={row.original.id}
             onDelete={onDelete}
             onView={onView}
+            onViewResult={onViewResult}
+            onVote={onVote}
           />
         ),
         header: 'ACTIONS',
       },
     ],
-    [onDelete, onView]
+    [onDelete, onView, onViewResult, onVote]
   );
 
   const handleChangedSearch = (event: React.ChangeEvent<HTMLInputElement>) =>

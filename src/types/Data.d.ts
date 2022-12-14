@@ -7,7 +7,9 @@ declare namespace Data {
     | 'Delete'
     | 'Pay'
     | 'Approve Payment'
-    | 'Reject Payment';
+    | 'Reject Payment'
+    | 'Vote'
+    | 'View Result';
 
   type Base = {
     createdAt: string;
@@ -139,7 +141,7 @@ declare namespace Data {
     id: number;
     title: string;
     description: string;
-    startDate?: string;
+    allowedAnswer: number;
     endDate?: string;
     choices?: string[];
     pollChoices?: PollChoice[];

@@ -138,6 +138,8 @@ export type PollCreateParams = Omit<
   'id' | 'pollChoices' | 'createdAt' | 'updatedAt' | 'deletedAt'
 >;
 
+export type PollEditParams = PollCreateParams;
+
 export type PropertyCreateParams = Omit<
   Data.Property,
   | 'id'
