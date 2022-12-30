@@ -27,7 +27,7 @@ const Reservations: NextPageWithLayout = () => {
         end: day(reservation.endDate).format('YYYY-MM-DThh:mm:ss'),
         id: `${reservation.id}`,
         start: day(reservation.startDate).format('YYYY-MM-DThh:mm:ss'),
-        title: 'Occupied',
+        title: `${reservation.tenant.firstName} ${reservation.tenant.lastName}`,
       })) || []
     );
   }, [getReservations?.data]);
@@ -79,6 +79,7 @@ const Reservations: NextPageWithLayout = () => {
 
           <Tabs.Panel value="calendar">
             <AdminReservationsCalendar
+              eventClick={(info) => handleOnAction('View', +info.event.id)}
               events={reservationEvents as EventSourceInput}
             />
           </Tabs.Panel>

@@ -14,13 +14,12 @@ type Props = CalendarOptions;
 export const AdminReservationsCalendar: React.FC<Props> = (props) => {
   const [facilityId, setFacilityId] = React.useState(0);
 
-  const { isLoading: isGetFacilitiesLoading, data: getFacilities } =
-    useGetFacilities();
+  const { data: getFacilities } = useGetFacilities();
 
-  const isLoading = React.useMemo(
-    () => isGetFacilitiesLoading,
-    [isGetFacilitiesLoading]
-  );
+  // const isLoading = React.useMemo(
+  //   () => isGetFacilitiesLoading,
+  //   [isGetFacilitiesLoading]
+  // );
 
   const facilityOptions = React.useMemo(() => {
     return (
@@ -53,6 +52,7 @@ export const AdminReservationsCalendar: React.FC<Props> = (props) => {
 
         {facility && (
           <FullCalendar
+            eventClick={props.eventClick}
             events={props.events}
             headerToolbar={{
               center: 'title',

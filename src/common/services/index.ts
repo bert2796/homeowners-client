@@ -10,6 +10,7 @@ export * as propertyAPI from './property.service';
 export * as propertyBlockAPI from './propertyBlock.service';
 export * as propertyPhaseAPI from './propertyPhase.service';
 export * as propertyTypeAPI from './propertyType.service';
+export * as reportAPI from './report.service';
 export * as reservationAPI from './reservation.service';
 export * as reservationPaymentAPI from './reservationPayment.service';
 export * as userAPI from './user.service';

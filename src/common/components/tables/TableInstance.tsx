@@ -22,6 +22,7 @@ import React from 'react';
 
 type Props<T extends object> = Partial<TableOptions<T>> & {
   search?: string;
+  hasPagination?: boolean;
   columns: ColumnDef<T>[];
   data: T[];
 };
@@ -30,6 +31,8 @@ type Props<T extends object> = Partial<TableOptions<T>> & {
 export const TableInstance = <T extends {}>(props: Props<T>) => {
   const [scrolled, setScrolled] = React.useState(false);
 
+  const hasPagination =
+    typeof props.hasPagination === 'undefined' ? true : props.hasPagination;
   const fuzzyFilter = (row: any, columnId: any, value: any, addMeta: any) => {
     // Rank the item
     const itemRank = rankItem(row.getValue(columnId), value);
@@ -92,7 +95,7 @@ export const TableInstance = <T extends {}>(props: Props<T>) => {
         </tbody>
       </Table>
 
-      {Boolean(table.getRowModel().rows?.length) && (
+      {hasPagination && Boolean(table.getRowModel().rows?.length) && (
         <Group mt="md" mx="xs" position="apart">
           <Group>
             <Text c="gray.6">Show</Text>

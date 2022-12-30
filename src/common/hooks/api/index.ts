@@ -10,6 +10,7 @@ export * from './propertyBlock';
 export * from './propertyPhase';
 export * from './propertySetting';
 export * from './propertyType';
+export * from './report';
 export * from './reservation';
 export * from './reservationPayment';
 export * from './staff';

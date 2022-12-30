@@ -190,6 +190,11 @@ declare namespace Data {
     propertyType: PropertySettings;
   };
 
+  type Report = {
+    date: string;
+    total: number;
+  };
+
   type User = Base & {
     id: number;
     email: string;
