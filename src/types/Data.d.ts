@@ -183,9 +183,11 @@ declare namespace Data {
     bathrooms: number;
     bedrooms: number;
     propertyLocationBlockId: number;
+    propertyLocationLotId: number;
     propertyLocationPhaseId: number;
     propertyTypeId: number;
     propertyLocationBlock: PropertySettings;
+    propertyLocationLot: PropertySettings;
     propertyLocationPhase: PropertySettings;
     propertyType: PropertySettings;
   };

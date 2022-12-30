@@ -10,7 +10,7 @@ import { Loader } from '../widgets/Loader';
 
 type Props = {
   id: number;
-  settingsType: 'Block' | 'Phase' | 'Type';
+  settingsType: 'Block' | 'Phase' | 'Type' | 'Lot';
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };

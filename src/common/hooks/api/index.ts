@@ -7,6 +7,7 @@ export * from './payment';
 export * from './poll';
 export * from './property';
 export * from './propertyBlock';
+export * from './propertyLot';
 export * from './propertyPhase';
 export * from './propertySetting';
 export * from './propertyType';

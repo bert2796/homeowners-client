@@ -8,7 +8,7 @@ import { createPropertySettingsSchema } from '../../validations';
 import { Loader } from '../widgets/Loader';
 
 type Props = {
-  settingsType: 'Block' | 'Phase' | 'Type';
+  settingsType: 'Block' | 'Phase' | 'Type' | 'Lot';
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };

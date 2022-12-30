@@ -6,6 +6,13 @@ import {
   useGetPropertyBlocks,
 } from './propertyBlock';
 import {
+  useCreatePropertyLot,
+  useDeletePropertyLot,
+  useEditPropertyLot,
+  useGetPropertyLot,
+  useGetPropertyLots,
+} from './propertyLot';
+import {
   useCreatePropertyPhase,
   useDeletePropertyPhase,
   useEditPropertyPhase,
@@ -20,7 +27,9 @@ import {
   useGetPropertyTypes,
 } from './propertyType';
 
-export const useGetPropertySettings = (type: 'Type' | 'Block' | 'Phase') => {
+export const useGetPropertySettings = (
+  type: 'Type' | 'Block' | 'Phase' | 'Lot'
+) => {
   switch (type) {
     case 'Block':
       return useGetPropertyBlocks;
@@ -28,10 +37,14 @@ export const useGetPropertySettings = (type: 'Type' | 'Block' | 'Phase') => {
       return useGetPropertyPhases;
     case 'Type':
       return useGetPropertyTypes;
+    case 'Lot':
+      return useGetPropertyLots;
   }
 };
 
-export const useGetPropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
+export const useGetPropertySetting = (
+  type: 'Type' | 'Block' | 'Phase' | 'Lot'
+) => {
   switch (type) {
     case 'Block':
       return useGetPropertyBlock;
@@ -39,10 +52,14 @@ export const useGetPropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
       return useGetPropertyPhase;
     case 'Type':
       return useGetPropertyType;
+    case 'Lot':
+      return useGetPropertyLot;
   }
 };
 
-export const useCreatePropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
+export const useCreatePropertySetting = (
+  type: 'Type' | 'Block' | 'Phase' | 'Lot'
+) => {
   switch (type) {
     case 'Block':
       return useCreatePropertyBlock;
@@ -50,10 +67,14 @@ export const useCreatePropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
       return useCreatePropertyPhase;
     case 'Type':
       return useCreatePropertyType;
+    case 'Lot':
+      return useCreatePropertyLot;
   }
 };
 
-export const useEditPropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
+export const useEditPropertySetting = (
+  type: 'Type' | 'Block' | 'Phase' | 'Lot'
+) => {
   switch (type) {
     case 'Block':
       return useEditPropertyBlock;
@@ -61,10 +82,14 @@ export const useEditPropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
       return useEditPropertyPhase;
     case 'Type':
       return useEditPropertyType;
+    case 'Lot':
+      return useEditPropertyLot;
   }
 };
 
-export const useDeletePropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
+export const useDeletePropertySetting = (
+  type: 'Type' | 'Block' | 'Phase' | 'Lot'
+) => {
   switch (type) {
     case 'Block':
       return useDeletePropertyBlock;
@@ -72,5 +97,7 @@ export const useDeletePropertySetting = (type: 'Type' | 'Block' | 'Phase') => {
       return useDeletePropertyPhase;
     case 'Type':
       return useDeletePropertyType;
+    case 'Lot':
+      return useDeletePropertyLot;
   }
 };

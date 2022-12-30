@@ -15,11 +15,11 @@ import { PropertyCreateParams } from '../../../types';
 import {
   useCreateProperty,
   useGetPropertyBlocks,
+  useGetPropertyLots,
   useGetPropertyPhases,
   useGetPropertyTypes,
 } from '../../hooks/api';
 import { createPropertySchema } from '../../validations';
-import { InputAmountPHP } from '../inputs/InputAmountPHP';
 import { Loader } from '../widgets/Loader';
 
 type Props = {
@@ -40,6 +40,8 @@ export const FormCreateProperty: React.FC<Props> = ({
   } = useCreateProperty();
   const { data: getPropertyBlocks, isLoading: isGetPropertyBlocksLoading } =
     useGetPropertyBlocks();
+  const { data: getPropertyLots, isLoading: isGetPropertyLotsLoading } =
+    useGetPropertyLots();
   const { data: getPropertyPhases, isLoading: isGetPropertyPhasesLoading } =
     useGetPropertyPhases();
   const { data: getPropertyTypes, isLoading: isGetPropertyTypesLoading } =
@@ -54,6 +56,7 @@ export const FormCreateProperty: React.FC<Props> = ({
       location: '',
       name: '',
       propertyLocationBlockId: 0,
+      propertyLocationLotId: 0,
       propertyLocationPhaseId: 0,
       propertyTypeId: 0,
     },
@@ -64,11 +67,13 @@ export const FormCreateProperty: React.FC<Props> = ({
     () =>
       isCreatePropertyLoading ||
       isGetPropertyBlocksLoading ||
+      isGetPropertyLotsLoading ||
       isGetPropertyPhasesLoading ||
       isGetPropertyTypesLoading,
     [
       isCreatePropertyLoading,
       isGetPropertyBlocksLoading,
+      isGetPropertyLotsLoading,
       isGetPropertyPhasesLoading,
       isGetPropertyTypesLoading,
     ]
@@ -165,7 +170,7 @@ export const FormCreateProperty: React.FC<Props> = ({
 
         <SimpleGrid
           breakpoints={[{ cols: 1, maxWidth: 'sm' }]}
-          cols={2}
+          cols={3}
           mt="md"
         >
           <Select
@@ -201,6 +206,24 @@ export const FormCreateProperty: React.FC<Props> = ({
             value={`${form.values.propertyLocationPhaseId}`}
             onChange={(value) => {
               form.setFieldValue('propertyLocationPhaseId', +(value || 0));
+            }}
+          />
+
+          <Select
+            data={
+              getPropertyLots?.data?.map((type) => ({
+                label: type.display,
+                value: `${type.id}`,
+              })) || []
+            }
+            disabled={!getPropertyLots?.data?.length}
+            label="Lot"
+            placeholder="ex: Lot One (1)"
+            required={Boolean(getPropertyLots?.data?.length)}
+            searchable={Boolean(getPropertyLots?.data?.length)}
+            value={`${form.values.propertyLocationLotId}`}
+            onChange={(value) => {
+              form.setFieldValue('propertyLocationLotId', +(value || 0));
             }}
           />
         </SimpleGrid>

@@ -10,7 +10,7 @@ type Props = {
   type: Data.Action;
   isOpen: boolean;
   id?: number;
-  settingsType: 'Block' | 'Phase' | 'Type';
+  settingsType: 'Block' | 'Phase' | 'Type' | 'Lot';
   onSuccess: (message: string) => void;
   onClose: () => void;
 };

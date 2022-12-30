@@ -8,6 +8,7 @@ export * as paymentAPI from './payment.service';
 export * as pollAPI from './poll.service';
 export * as propertyAPI from './property.service';
 export * as propertyBlockAPI from './propertyBlock.service';
+export * as propertyLotAPI from './propertyLot.service';
 export * as propertyPhaseAPI from './propertyPhase.service';
 export * as propertyTypeAPI from './propertyType.service';
 export * as reportAPI from './report.service';

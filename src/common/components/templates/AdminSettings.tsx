@@ -3,6 +3,7 @@ import {
   IconBusinessplan,
   IconFlag,
   IconFlag2,
+  IconPennant,
   IconPool,
   IconSitemap,
 } from '@tabler/icons';
@@ -29,6 +30,11 @@ export const AdminSettings: React.FC<Props> = ({ children }) => {
       icon: IconFlag,
       label: 'Property Blocks',
       path: '/admin/settings/property-blocks',
+    },
+    {
+      icon: IconPennant,
+      label: 'Property Lots',
+      path: '/admin/settings/property-lots',
     },
     {
       icon: IconFlag2,

@@ -145,6 +145,7 @@ export type PropertyCreateParams = Omit<
   | 'id'
   | 'propertyLocationBlock'
   | 'propertyLocationPhase'
+  | 'propertyLocationLot'
   | 'propertyType'
   | 'createdAt'
   | 'updatedAt'

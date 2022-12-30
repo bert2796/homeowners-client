@@ -10,7 +10,7 @@ import { SearchAndAdd } from '../widgets/SearchAndAdd';
 import { TableInstance } from './TableInstance';
 
 type Props = {
-  settingsType: 'Type' | 'Block' | 'Phase';
+  settingsType: 'Type' | 'Block' | 'Phase' | 'Lot';
   onAdd?: () => void;
   onDelete?: (id: number) => void;
   onEdit?: (id: number) => void;
