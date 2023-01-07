@@ -161,6 +161,18 @@ export type PropertySettingsEditParams = PropertySettingsCreateParams;
 
 export type PropertyEditParams = PropertyCreateParams;
 
+export type MeEditParams = Omit<
+  Data.User,
+  'id' | 'avatar' | 'createdAt' | 'updatedAt' | 'deletedAt'
+> & {
+  avatar?: FileWithPath;
+};
+
+export type MePasswordEditParams = {
+  currentPassword: string;
+  newPassword: string;
+};
+
 export type UtilityCreateParams = Omit<
   Data.Utility,
   'id' | 'createdAt' | 'updatedAt' | 'deletedAt'

@@ -199,6 +199,7 @@ declare namespace Data {
 
   type User = Base & {
     id: number;
+    avatar?: string;
     email: string;
     username: string;
     firstName: string;

@@ -112,8 +112,10 @@ export const Admin: React.FC<Props> = ({ children }) => {
     return (
       <>
         <DashboardLayout
+          avatar={auth?.user?.avatar || ''}
           headerLink={getRoutePath(Routes.ADMIN_DASHBOARD)}
           items={getTabs(auth.user.role === 'Staff')}
+          onProfile={() => Router.push(getRoutePath(Routes.ADMIN_PROFILE))}
         >
           {children}
         </DashboardLayout>

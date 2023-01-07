@@ -5,7 +5,6 @@ import {
   IconDashboard,
   IconFileCertificate,
   IconNews,
-  IconScale,
 } from '@tabler/icons';
 import Router from 'next/router';
 import React from 'react';
@@ -78,8 +77,10 @@ export const Tenant: React.FC<Props> = ({ children }) => {
   if (auth.user) {
     return (
       <DashboardLayout
+        avatar={auth?.user?.avatar || ''}
         headerLink={getRoutePath(Routes.TENANT_DASHBOARD)}
         items={ITEMS}
+        onProfile={() => Router.push(getRoutePath(Routes.TENANT_PROFILE))}
       >
         {children}
       </DashboardLayout>

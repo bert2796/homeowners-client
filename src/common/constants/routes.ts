@@ -12,6 +12,7 @@ export enum Routes {
   ADMIN_POLLS = 'ADMIN_POLLS',
   ADMIN_REPORTS = 'ADMIN_REPORTS',
   ADMIN_SETTINGS = 'ADMIN_SETTINGS',
+  ADMIN_PROFILE = 'ADMIN_PROFILE',
 
   TENANT_DASHBOARD = 'TENANT_DASHBOARD',
   TENANT_FACILITIES = 'TENANT_FACILITIES',
@@ -20,6 +21,7 @@ export enum Routes {
   TENANT_RESERVATIONS = 'TENANT_RESERVATIONS',
   TENANT_ANNOUNCEMENTS = 'TENANT_ANNOUNCEMENTS',
   TENANT_POLLS = 'TENANT_POLLS',
+  TENANT_PROFILE = 'TENANT_PROFILE',
 }
 
 export const routes: {
@@ -68,6 +70,9 @@ export const routes: {
   [Routes.ADMIN_SETTINGS]: {
     path: '/admin/settings/property-types',
   },
+  [Routes.ADMIN_PROFILE]: {
+    path: '/admin/profile',
+  },
 
   // Tenant
   [Routes.TENANT_DASHBOARD]: {
@@ -90,5 +95,8 @@ export const routes: {
   },
   [Routes.TENANT_POLLS]: {
     path: '/tenant/polls',
+  },
+  [Routes.TENANT_PROFILE]: {
+    path: '/tenant/profile',
   },
 };

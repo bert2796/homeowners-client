@@ -16,4 +16,5 @@ export * from './reservation';
 export * from './reservationPayment';
 export * from './staff';
 export * from './tenant';
+export * from './user';
 export * from './utility';

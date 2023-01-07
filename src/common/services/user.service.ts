@@ -1,6 +1,11 @@
 import { stringify } from 'querystring';
 
-import { UserCreateParams, UserEditParams } from '@/types/index';
+import {
+  MeEditParams,
+  MePasswordEditParams,
+  UserCreateParams,
+  UserEditParams,
+} from '@/types/index';
 
 import { request } from '../utils';
 
@@ -10,6 +15,31 @@ export const getMe = async () => {
   return await request<Data.User>({
     method: 'GET',
     url: `${path}/me`,
+  });
+};
+
+export const editMe = async (params: Partial<MeEditParams>) => {
+  const formData = new FormData();
+
+  Object.entries(params).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  return await request<Data.User>({
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    method: 'PATCH',
+    url: `${path}/me`,
+  });
+};
+
+export const editMePassword = async (params: MePasswordEditParams) => {
+  return await request<Data.User>({
+    data: params,
+    method: 'PATCH',
+    url: `${path}/me/password`,
   });
 };
 

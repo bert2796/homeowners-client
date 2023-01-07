@@ -12,15 +12,19 @@ import { NavItems } from '../nav/NavItems';
 import { SidebarForDashboard } from '../sidebar/SidebarForDashboard';
 
 type Props = {
+  avatar: string;
   children: React.ReactNode;
   items: { href: string; icon: TablerIcon; label: string }[];
   headerLink: string;
+  onProfile: () => void;
 };
 
 export const DashboardLayout: React.FC<Props> = ({
+  avatar,
   children,
   items,
   headerLink,
+  onProfile,
 }) => {
   const [isOpen, handlers] = useDisclosure(false);
 
@@ -52,6 +56,7 @@ export const DashboardLayout: React.FC<Props> = ({
     >
       {/* header */}
       <HeaderForDashboard
+        avatar={avatar}
         renderLeft={
           <div>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
@@ -59,6 +64,7 @@ export const DashboardLayout: React.FC<Props> = ({
             </MediaQuery>
           </div>
         }
+        onProfile={onProfile}
       />
 
       {/* content */}

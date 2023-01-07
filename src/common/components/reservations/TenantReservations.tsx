@@ -59,6 +59,7 @@ export const TenantReservation: React.FC<Props> = (props) => {
             editable
             selectMirror
             selectable
+            eventClick={props.eventClick}
             eventOverlap={false}
             events={props.events}
             headerToolbar={{

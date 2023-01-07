@@ -15,6 +15,7 @@ type AuthContextProps = {
   isInitialized: boolean;
   login?: (params: { username: string; password: string }) => Promise<void>;
   logout?: () => void;
+  updateCurrentUser?: (data: Partial<Data.User>) => void;
 };
 
 const initialValue: AuthContextProps = {
@@ -22,6 +23,7 @@ const initialValue: AuthContextProps = {
   login: undefined,
   logout: undefined,
   token: '',
+  updateCurrentUser: undefined,
   user: undefined,
 };
 
@@ -86,6 +88,34 @@ export const AuthProvider = ({ children }: Props) => {
     Router.push('/auth/login');
   };
 
+  const updateUser = (params: Partial<Data.User>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updatedUser: any = {};
+
+    if (user) {
+      Object.entries(user).forEach(([key, value]) => {
+        if (
+          params[`${key as keyof Data.User}`] &&
+          params[`${key as keyof Data.User}`] !== value
+        ) {
+          updatedUser[
+            `${key}` as keyof Pick<
+              Data.User,
+              'firstName' | 'middleName' | 'lastName' | 'username' | 'email'
+            >
+          ] = params[`${key as keyof Data.User}`] as string;
+        }
+      });
+    }
+
+    if (updatedUser) {
+      setUser({
+        ...user,
+        ...(updatedUser as Data.User),
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -93,6 +123,7 @@ export const AuthProvider = ({ children }: Props) => {
         login,
         logout,
         token: cookies.token,
+        updateCurrentUser: updateUser,
         user,
       }}
     >

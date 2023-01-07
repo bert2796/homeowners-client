@@ -32,9 +32,9 @@ const Reservations: NextPageWithLayout = () => {
   const reservationEvents = React.useMemo(() => {
     return (
       getReservations?.data.map((reservation) => ({
-        end: day(reservation.endDate).format('YYYY-MM-DThh:mm:ss'),
+        end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
         id: `${reservation.id}`,
-        start: day(reservation.startDate).format('YYYY-MM-DThh:mm:ss'),
+        start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
         title: 'Occupied',
       })) || []
     );
@@ -106,6 +106,7 @@ const Reservations: NextPageWithLayout = () => {
           <Tabs.Panel value="calendar">
             <Box>
               <TenantReservation
+                eventClick={(info) => handleOnAction('View', +info.event.id)}
                 events={reservationEvents as EventSourceInput}
                 onReserve={handleOpenReservationModal}
               />
