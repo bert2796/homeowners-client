@@ -6,7 +6,6 @@ import { PropertySettingsEditParams } from '../../../types';
 import { useEditPropertySetting, useGetPropertySetting } from '../../hooks/api';
 import { hasDataChanges } from '../../utils';
 import { createPropertySettingsSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   id: number;
@@ -90,10 +89,6 @@ export const FormEditPropertySettings: React.FC<Props> = ({
       setIsDataMounted(true);
     }
   }, [form, getPropertySetting?.data, isDataMounted]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

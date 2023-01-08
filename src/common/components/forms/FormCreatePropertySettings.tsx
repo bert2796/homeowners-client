@@ -5,7 +5,6 @@ import React from 'react';
 import { PropertySettingsCreateParams } from '../../../types';
 import { useCreatePropertySetting } from '../../hooks/api';
 import { createPropertySettingsSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   settingsType: 'Block' | 'Phase' | 'Type' | 'Lot';
@@ -65,10 +64,6 @@ export const FormCreatePropertySettings: React.FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

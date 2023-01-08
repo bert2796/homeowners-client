@@ -22,7 +22,6 @@ import {
 } from '../../hooks/api';
 import { hasDataChanges, objectKeyRemover } from '../../utils';
 import { editPropertySchema } from '../../validations';
-import { InputAmountPHP } from '../inputs/InputAmountPHP';
 import { Loader } from '../widgets/Loader';
 
 type Props = {
@@ -79,14 +78,12 @@ export const FormEditProperty: React.FC<Props> = ({
 
   const isLoading = React.useMemo(
     () =>
-      isEditPropertyLoading ||
       isGetProperty ||
       isGetPropertyBlocksLoading ||
       isGetPropertyPhasesLoading ||
       isGetPropertyLotsLoading ||
       isGetPropertyTypesLoading,
     [
-      isEditPropertyLoading,
       isGetPropertyLotsLoading,
       isGetProperty,
       isGetPropertyBlocksLoading,
@@ -294,7 +291,7 @@ export const FormEditProperty: React.FC<Props> = ({
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isEditPropertyLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -303,7 +300,7 @@ export const FormEditProperty: React.FC<Props> = ({
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isEditPropertyLoading}
             mt="xl"
             type="submit"
           >

@@ -49,10 +49,6 @@ export const FormEditAnnouncement: React.FC<Props> = ({
   const { data: getAnnouncement, isLoading: isGetAnnouncementLoading } =
     useGetAnnouncement(id);
 
-  const isLoading = React.useMemo(
-    () => isEditAnnouncementLoading || isGetAnnouncementLoading,
-    [isEditAnnouncementLoading, isGetAnnouncementLoading]
-  );
   const isSubmitDisabled = React.useMemo(
     () =>
       getAnnouncement?.data
@@ -94,7 +90,7 @@ export const FormEditAnnouncement: React.FC<Props> = ({
     }
   }, [form, getAnnouncement?.data, isDataMounted]);
 
-  if (isLoading) {
+  if (isGetAnnouncementLoading) {
     return <Loader />;
   }
 
@@ -174,7 +170,7 @@ export const FormEditAnnouncement: React.FC<Props> = ({
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isEditAnnouncementLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -183,7 +179,7 @@ export const FormEditAnnouncement: React.FC<Props> = ({
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isEditAnnouncementLoading}
             mt="xl"
             type="submit"
           >

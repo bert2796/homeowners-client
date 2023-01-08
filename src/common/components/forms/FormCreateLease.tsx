@@ -68,13 +68,11 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
 
   const isLoading = React.useMemo(
     () =>
-      isCreateLeaseLoading ||
       isGetPropertiesLoading ||
       isGetTenantsLoading ||
       isGetExtraChargesLoading ||
       isGetUtilitiesLoading,
     [
-      isCreateLeaseLoading,
       isGetPropertiesLoading,
       isGetTenantsLoading,
       isGetExtraChargesLoading,
@@ -497,7 +495,7 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isCreateLeaseLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -506,7 +504,7 @@ export const FormCreateLease: React.FC<Props> = ({ onCancel, onSuccess }) => {
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isCreateLeaseLoading}
             mt="xl"
             type="submit"
           >

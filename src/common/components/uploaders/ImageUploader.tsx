@@ -58,12 +58,11 @@ export const ImageUploader: React.FC<Props> = ({ files, onSetFiles }) => {
 
             <Text align="center" mt="xl" size="lg" weight={700}>
               <Dropzone.Accept>Drop files here</Dropzone.Accept>
-              <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
-              <Dropzone.Idle>Upload proof of payment</Dropzone.Idle>
+              <Dropzone.Reject>only SVG, PNG or JPG</Dropzone.Reject>
+              <Dropzone.Idle>Upload images</Dropzone.Idle>
             </Text>
             <Text align="center" color="dimmed" mt="xs" size="sm">
-              Drag&apos;n&apos;drop files here to upload. We can accept only{' '}
-              <i>.pdf</i> files that are less than 30mb in size.
+              Click to select an image, or drag and drop SVG, PNG or JPG
             </Text>
           </div>
         </Dropzone>

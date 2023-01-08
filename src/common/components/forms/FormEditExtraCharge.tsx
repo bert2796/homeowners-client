@@ -6,7 +6,6 @@ import { ExtraChargeEditParams } from '../../../types';
 import { useEditExtraCharge, useGetExtraCharge } from '../../hooks/api';
 import { hasDataChanges } from '../../utils';
 import { createPropertySettingsSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   id: number;
@@ -88,10 +87,6 @@ export const FormEditExtraCharge: React.FC<Props> = ({
       setIsDataMounted(true);
     }
   }, [form, getExtraCharge?.data, isDataMounted]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

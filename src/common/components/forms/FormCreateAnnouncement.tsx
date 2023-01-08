@@ -13,7 +13,6 @@ import React from 'react';
 import { AnnouncementCreateParams } from '../../../types';
 import { useCreateAnnouncement } from '../../hooks/api';
 import { createAnnouncementSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   onCancel: () => void;
@@ -77,10 +76,6 @@ export const FormCreateAnnouncement: React.FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

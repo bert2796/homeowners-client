@@ -65,13 +65,11 @@ export const FormCreateProperty: React.FC<Props> = ({
 
   const isLoading = React.useMemo(
     () =>
-      isCreatePropertyLoading ||
       isGetPropertyBlocksLoading ||
       isGetPropertyLotsLoading ||
       isGetPropertyPhasesLoading ||
       isGetPropertyTypesLoading,
     [
-      isCreatePropertyLoading,
       isGetPropertyBlocksLoading,
       isGetPropertyLotsLoading,
       isGetPropertyPhasesLoading,
@@ -268,7 +266,7 @@ export const FormCreateProperty: React.FC<Props> = ({
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isCreatePropertyLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -277,7 +275,7 @@ export const FormCreateProperty: React.FC<Props> = ({
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isCreatePropertyLoading}
             mt="xl"
             type="submit"
           >

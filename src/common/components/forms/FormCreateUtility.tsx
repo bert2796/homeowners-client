@@ -5,7 +5,6 @@ import React from 'react';
 import { UtilityCreateParams } from '../../../types';
 import { useCreateUtility } from '../../hooks/api';
 import { createPropertySettingsSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   onCancel: () => void;
@@ -60,10 +59,6 @@ export const FormCreateUtility: React.FC<Props> = ({ onCancel, onSuccess }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

@@ -14,7 +14,6 @@ import { UserCreateParams } from '../../../types';
 import { useCreateStaff } from '../../hooks/api';
 import { generatePassword } from '../../utils';
 import { createUserSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   onCancel: () => void;
@@ -79,10 +78,6 @@ export const FormCreateStaff: React.FC<Props> = ({ onCancel, onSuccess }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

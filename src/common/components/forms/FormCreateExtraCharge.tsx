@@ -5,7 +5,6 @@ import React from 'react';
 import { ExtraChargeCreateParams } from '../../../types';
 import { useCreateExtraCharge } from '../../hooks/api';
 import { createPropertySettingsSchema } from '../../validations';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   onCancel: () => void;
@@ -63,10 +62,6 @@ export const FormCreateExtraCharge: React.FC<Props> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

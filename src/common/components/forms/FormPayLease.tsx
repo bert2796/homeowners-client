@@ -7,7 +7,6 @@ import { LeasePaymentCreateParams } from '../../../types';
 import { useCreateLeasePayment } from '../../hooks/api';
 import { InputAmountPHP } from '../inputs/InputAmountPHP';
 import { PaymentUploader } from '../uploaders/PaymentUploader';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   id: number;
@@ -67,10 +66,6 @@ export const FormPayLease: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

@@ -12,30 +12,27 @@ import { FileWithPath } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
-import { FacilityCreateParams } from '../../../types';
-import { useCreateFacility } from '../../hooks/api';
+import { FacilityEditParams } from '../../../types';
+import { useEditFacility, useGetFacility } from '../../hooks/api';
+import { hasDataChanges } from '../../utils';
 import { InputAmountPHP } from '../inputs/InputAmountPHP';
 import { ImageUploader } from '../uploaders/ImageUploader';
 
 type Props = {
+  id: number;
   onCancel: () => void;
   onSuccess: (message: string) => void;
 };
 
-export const FormCreateFacility: React.FC<Props> = ({
+export const FormEditFacility: React.FC<Props> = ({
+  id,
   onCancel,
   onSuccess,
 }) => {
   const [files, setFiles] = React.useState<FileWithPath[]>([]);
+  const [isDataMounted, setIsDataMounted] = React.useState(false);
 
-  const {
-    mutate: createFacility,
-    reset,
-    isLoading,
-    isSuccess,
-    isError,
-  } = useCreateFacility();
-  const form = useForm<FacilityCreateParams>({
+  const form = useForm<FacilityEditParams>({
     initialValues: {
       amount: '',
       description: '',
@@ -45,14 +42,43 @@ export const FormCreateFacility: React.FC<Props> = ({
       type: 'PerHour',
     },
   });
+  const {
+    mutate: editFacility,
+    reset,
+    isLoading: isEditFacilityLoading,
+    isSuccess,
+    isError,
+  } = useEditFacility(id, form.values);
+  const { data: getFacility, isLoading: isGetFacilityLoading } =
+    useGetFacility(id);
 
-  const isSubmitDisabled = React.useMemo(
-    () =>
-      Object.entries(form.values).some(([key, value]) =>
-        key === 'description' || key === 'downPayment' ? false : !value
-      ) || !files.length,
-    [files.length, form.values]
+  const isLoading = React.useMemo(
+    () => isEditFacilityLoading || isGetFacilityLoading,
+    [isEditFacilityLoading, isGetFacilityLoading]
   );
+
+  const isSubmitDisabled = React.useMemo(() => {
+    if (getFacility?.data) {
+      const {
+        description,
+        name,
+        facilityPaymentSetting: { amount, downPayment, type },
+      } = getFacility?.data;
+
+      const originalValue = {
+        amount,
+        description,
+        downPayment,
+        images: [],
+        name,
+        type,
+      };
+
+      return !hasDataChanges(originalValue, form.values);
+    }
+
+    return true;
+  }, [form.values, getFacility?.data]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -64,22 +90,41 @@ export const FormCreateFacility: React.FC<Props> = ({
     // validate form
     form.validate();
 
-    if (!Object.keys(form.errors).length) {
-      createFacility({
-        ...form.values,
-        images: files,
-      });
+    if (getFacility?.data.id && !Object.keys(form.errors).length) {
+      editFacility();
     }
   };
 
   React.useEffect(() => {
     if (isSuccess) {
-      onSuccess('Facility created successfully');
+      onSuccess('Facility edited successfully');
 
       onCancel();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
+
+  // set values in form after getting facility
+  React.useEffect(() => {
+    if (!isDataMounted && getFacility?.data) {
+      const {
+        description,
+        name,
+        facilityPaymentSetting: { amount, downPayment, type },
+      } = getFacility?.data;
+
+      form.setValues({
+        amount,
+        description,
+        downPayment,
+        images: [],
+        name,
+        type,
+      });
+
+      setIsDataMounted(true);
+    }
+  }, [form, getFacility?.data, isDataMounted]);
 
   return (
     <>
@@ -87,7 +132,7 @@ export const FormCreateFacility: React.FC<Props> = ({
         <Alert
           color="red"
           mb={20}
-          title="Encountered an error while creating facility"
+          title="Encountered an error while editing facility"
         >
           Something went wrong, Please try again later.
         </Alert>
@@ -122,6 +167,7 @@ export const FormCreateFacility: React.FC<Props> = ({
               { label: 'Whole Day', value: 'WholeDay' },
             ]}
             label="Payment Rate Type"
+            value={form.values.type}
             onChange={(value) => {
               form.setFieldValue(
                 'type',
@@ -132,7 +178,7 @@ export const FormCreateFacility: React.FC<Props> = ({
 
           <InputAmountPHP
             label="Amount"
-            // value={parseFloat(form.values.amount)}
+            value={parseFloat(form.values.amount)}
             onChange={(value) => form.setFieldValue('amount', `${value}` || '')}
           />
         </SimpleGrid>
@@ -141,14 +187,16 @@ export const FormCreateFacility: React.FC<Props> = ({
           <InputAmountPHP
             label="Down Payment"
             mt="md"
+            value={parseFloat(form.values?.downPayment || '0')}
             onChange={(value) =>
               form.setFieldValue('downPayment', `${value}` || '')
             }
           />
         )}
 
-        <Text mb="md" mt="md">
-          Upload facility images
+        <Text mt="md">Upload facility images</Text>
+        <Text c="dimmed" fz="xs" mb="md">
+          Uploading new images will replace the old images
         </Text>
         <ImageUploader files={files} onSetFiles={setFiles} />
 

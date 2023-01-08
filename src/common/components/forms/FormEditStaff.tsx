@@ -47,10 +47,7 @@ export const FormEditStaff: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
   } = useEditStaff(id, form.values);
   const { data: getStaff, isLoading: isGetStaffLoading } = useGetStaff(id);
 
-  const isLoading = React.useMemo(
-    () => isEditStaffLoading || isGetStaffLoading,
-    [isEditStaffLoading, isGetStaffLoading]
-  );
+  const isLoading = React.useMemo(() => isGetStaffLoading, [isGetStaffLoading]);
 
   const isSubmitDisabled = React.useMemo(
     () =>
@@ -178,7 +175,7 @@ export const FormEditStaff: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isEditStaffLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -187,7 +184,7 @@ export const FormEditStaff: React.FC<Props> = ({ id, onCancel, onSuccess }) => {
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isEditStaffLoading}
             mt="xl"
             type="submit"
           >

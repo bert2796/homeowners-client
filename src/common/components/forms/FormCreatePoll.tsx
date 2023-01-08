@@ -17,7 +17,6 @@ import React from 'react';
 
 import { PollCreateParams } from '../../../types';
 import { useCreatePoll } from '../../hooks/api';
-import { Loader } from '../widgets/Loader';
 
 type Props = {
   onCancel: () => void;
@@ -111,10 +110,6 @@ export const FormCreatePoll: React.FC<Props> = ({ onCancel, onSuccess }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>

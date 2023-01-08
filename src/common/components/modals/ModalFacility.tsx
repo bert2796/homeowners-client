@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormCreateFacility } from '../forms/FormCreateFacility';
 import { FormDeleteFacility } from '../forms/FormDeleteFacility';
-import { FormEditAnnouncement } from '../forms/FormEditAnnouncement';
+import { FormEditFacility } from '../forms/FormEditFacility';
 import { FormViewFacility } from '../forms/FormViewFacility';
 import { ModalInstance } from './ModalInstance';
 
@@ -37,11 +37,7 @@ export const ModalFacility: React.FC<Props> = ({
       {type === 'View' && id && <FormViewFacility id={id} onCancel={onClose} />}
 
       {type === 'Edit' && id && onSuccess && (
-        <FormEditAnnouncement
-          id={id}
-          onCancel={onClose}
-          onSuccess={onSuccess}
-        />
+        <FormEditFacility id={id} onCancel={onClose} onSuccess={onSuccess} />
       )}
 
       {type === 'Delete' && id && onSuccess && (

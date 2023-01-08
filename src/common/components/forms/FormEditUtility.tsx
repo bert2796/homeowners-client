@@ -41,8 +41,8 @@ export const FormEditUtility: React.FC<Props> = ({
     useGetUtility(id);
 
   const isLoading = React.useMemo(
-    () => isEditUtilityLoading || isGetUtilityLoading,
-    [isEditUtilityLoading, isGetUtilityLoading]
+    () => isGetUtilityLoading,
+    [isGetUtilityLoading]
   );
 
   const isSubmitDisabled = React.useMemo(
@@ -128,7 +128,7 @@ export const FormEditUtility: React.FC<Props> = ({
 
         <Group mt="md" position="right">
           <Button
-            disabled={isLoading}
+            disabled={isEditUtilityLoading}
             mt="xl"
             variant="outline"
             onClick={onCancel}
@@ -137,7 +137,7 @@ export const FormEditUtility: React.FC<Props> = ({
           </Button>
           <Button
             disabled={isSubmitDisabled}
-            loading={isLoading}
+            loading={isEditUtilityLoading}
             mt="xl"
             type="submit"
           >
