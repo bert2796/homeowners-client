@@ -48,8 +48,23 @@ export const deleteFacility = async (id: number) => {
 };
 
 export const editFacility = async (id: number, params: FacilityEditParams) => {
+  const formData = new FormData();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (key === 'images' && typeof value !== 'string') {
+      value.forEach((image) => {
+        formData.append('images', image);
+      });
+    } else {
+      formData.append(key, value as string);
+    }
+  });
+
   return await request<Data.Facility>({
-    data: params,
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
     method: 'PATCH',
     url: `${path}/${id}`,
   });

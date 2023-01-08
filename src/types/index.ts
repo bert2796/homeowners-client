@@ -81,7 +81,10 @@ export type ReservationCreateParams = Omit<
   | 'createdAt'
   | 'updatedAt'
   | 'deletedAt'
->;
+> & {
+  images: FileWithPath[];
+  amount: string;
+};
 
 export type ReservationEditParams = ReservationCreateParams;
 

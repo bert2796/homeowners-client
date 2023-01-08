@@ -23,12 +23,17 @@ const Reservations: NextPageWithLayout = () => {
 
   const reservationEvents = React.useMemo(() => {
     return (
-      getReservations?.data.map((reservation) => ({
-        end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
-        id: `${reservation.id}`,
-        start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
-        title: `${reservation.tenant.firstName} ${reservation.tenant.lastName}`,
-      })) || []
+      getReservations?.data
+        .filter(
+          (reservation) =>
+            reservation.reservationPayments?.[0].status === 'Approved'
+        )
+        .map((reservation) => ({
+          end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
+          id: `${reservation.id}`,
+          start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
+          title: `${reservation.tenant.firstName} ${reservation.tenant.lastName}`,
+        })) || []
     );
   }, [getReservations?.data]);
 

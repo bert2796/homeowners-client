@@ -48,7 +48,7 @@ export const FormEditFacility: React.FC<Props> = ({
     isLoading: isEditFacilityLoading,
     isSuccess,
     isError,
-  } = useEditFacility(id, form.values);
+  } = useEditFacility(id, { ...form.values, images: files });
   const { data: getFacility, isLoading: isGetFacilityLoading } =
     useGetFacility(id);
 
@@ -74,11 +74,13 @@ export const FormEditFacility: React.FC<Props> = ({
         type,
       };
 
-      return !hasDataChanges(originalValue, form.values);
+      return (
+        !hasDataChanges(originalValue, { ...form.values }) && !files.length
+      );
     }
 
     return true;
-  }, [form.values, getFacility?.data]);
+  }, [files.length, form.values, getFacility?.data]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // prevent from refreshing page
@@ -117,7 +119,6 @@ export const FormEditFacility: React.FC<Props> = ({
         amount,
         description,
         downPayment,
-        images: [],
         name,
         type,
       });

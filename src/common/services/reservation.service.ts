@@ -22,8 +22,27 @@ export const getReservation = async (id: number) => {
 };
 
 export const createReservation = async (params: ReservationCreateParams) => {
+  const formData = new FormData();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (
+      key === 'images' &&
+      typeof value !== 'string' &&
+      typeof value !== 'number'
+    ) {
+      value.forEach((image) => {
+        formData.append('images', image);
+      });
+    } else {
+      formData.append(key, value as string);
+    }
+  });
+
   return await request<Data.Reservation>({
-    data: params,
+    data: formData,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
     method: 'POST',
     url: path,
   });

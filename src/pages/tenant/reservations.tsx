@@ -1,13 +1,11 @@
 /* eslint-disable simple-import-sort/imports */
-import { DateSelectArg, EventSourceInput } from '@fullcalendar/react'; // must go before plugins
+import { DateSelectArg } from '@fullcalendar/react'; // must go before plugins
 import { Box, Tabs } from '@mantine/core';
 import React from 'react';
 import { IconBorderAll, IconCalendarEvent, IconCheck } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
-import day from 'dayjs';
 
 import { useAuth } from '../../common/hooks';
-import { useGetReservations } from '../../common/hooks/api';
 import { Tenant } from '../../common/components/templates/Tenant';
 import { ModalCreateTenantReservation } from '../../common/components/modals/ModalCreateTenantReservation';
 import { TenantReservation } from '../../common/components/reservations/TenantReservations';
@@ -18,7 +16,6 @@ import { NextPageWithLayout } from '../_app';
 
 const Reservations: NextPageWithLayout = () => {
   const { user } = useAuth();
-  const { data: getReservations } = useGetReservations();
 
   const [selectedDate, setSelectedDate] = React.useState<DateSelectArg>();
   const [selectedFacility, setSelectedFacility] =
@@ -28,17 +25,6 @@ const Reservations: NextPageWithLayout = () => {
   const [type, setType] = React.useState<Data.Action>('Create');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [reservationId, setReservationId] = React.useState(0);
-
-  const reservationEvents = React.useMemo(() => {
-    return (
-      getReservations?.data.map((reservation) => ({
-        end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
-        id: `${reservation.id}`,
-        start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
-        title: 'Occupied',
-      })) || []
-    );
-  }, [getReservations?.data]);
 
   const handleOpenReservationModal = (
     date: DateSelectArg,
@@ -107,7 +93,6 @@ const Reservations: NextPageWithLayout = () => {
             <Box>
               <TenantReservation
                 eventClick={(info) => handleOnAction('View', +info.event.id)}
-                events={reservationEvents as EventSourceInput}
                 onReserve={handleOpenReservationModal}
               />
             </Box>

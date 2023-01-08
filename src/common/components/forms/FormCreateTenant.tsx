@@ -7,13 +7,12 @@ import {
   SimpleGrid,
   TextInput,
 } from '@mantine/core';
-import { joiResolver, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import React from 'react';
 
 import { UserCreateParams } from '../../../types';
 import { useCreateTenant } from '../../hooks/api';
 import { generatePassword } from '../../utils';
-import { createUserSchema } from '../../validations';
 
 type Props = {
   onCancel: () => void;
@@ -38,7 +37,6 @@ export const FormCreateTenant: React.FC<Props> = ({ onCancel, onSuccess }) => {
       role: 'Tenant',
       username: '',
     },
-    validate: joiResolver(createUserSchema),
   });
 
   const isSubmitDisabled = React.useMemo(

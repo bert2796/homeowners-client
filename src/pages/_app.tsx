@@ -49,6 +49,7 @@ export default function App(props: AppPropsWithLayout) {
           collapsedSidebarWidth: 74,
           sidebarWidth: 250,
         },
+        primaryColor: 'pink',
       }}
     >
       <style global jsx>{`
