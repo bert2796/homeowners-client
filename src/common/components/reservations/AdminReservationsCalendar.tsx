@@ -1,25 +1,47 @@
 /* eslint-disable simple-import-sort/imports */
-import FullCalendar from '@fullcalendar/react'; // must go before plugins
+import FullCalendar, { EventSourceInput } from '@fullcalendar/react'; // must go before plugins
 import { CalendarOptions } from '@fullcalendar/common';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Box, Select, Group } from '@mantine/core';
 import React from 'react';
+import day from 'dayjs';
 
-import { useGetFacilities } from '../../hooks/api';
+import { Loader } from '../widgets/Loader';
+import { useGetFacilities, useGetReservations } from '../../hooks/api';
 
 type Props = CalendarOptions;
 
 export const AdminReservationsCalendar: React.FC<Props> = (props) => {
   const [facilityId, setFacilityId] = React.useState(0);
 
-  const { data: getFacilities } = useGetFacilities();
+  const { data: getFacilities, isLoading: isGetFacilitiesLoading } =
+    useGetFacilities();
+  const { data: getReservations, isLoading: isGetReservationsLoading } =
+    useGetReservations();
 
-  // const isLoading = React.useMemo(
-  //   () => isGetFacilitiesLoading,
-  //   [isGetFacilitiesLoading]
-  // );
+  const reservationEvents = React.useMemo(() => {
+    return (
+      getReservations?.data
+        .filter(
+          (reservation) =>
+            reservation.facilityId === facilityId &&
+            reservation.reservationPayments?.[0].status === 'Approved'
+        )
+        .map((reservation) => ({
+          end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
+          id: `${reservation.id}`,
+          start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
+          title: `${reservation.tenant.firstName} ${reservation.tenant.lastName}`,
+        })) || []
+    );
+  }, [facilityId, getReservations?.data]);
+
+  const isLoading = React.useMemo(
+    () => isGetFacilitiesLoading || isGetReservationsLoading,
+    [isGetFacilitiesLoading, isGetReservationsLoading]
+  );
 
   const facilityOptions = React.useMemo(() => {
     return (
@@ -33,6 +55,10 @@ export const AdminReservationsCalendar: React.FC<Props> = (props) => {
   const facility = React.useMemo(() => {
     return getFacilities?.data.find((facility) => facility.id === facilityId);
   }, [facilityId, getFacilities?.data]);
+
+  if (isLoading) {
+    <Loader />;
+  }
 
   return (
     <>
@@ -53,7 +79,7 @@ export const AdminReservationsCalendar: React.FC<Props> = (props) => {
         {facility && (
           <FullCalendar
             eventClick={props.eventClick}
-            events={props.events}
+            events={reservationEvents as EventSourceInput}
             headerToolbar={{
               center: 'title',
               left: 'dayGridMonth,timeGridWeek,timeGridDay',

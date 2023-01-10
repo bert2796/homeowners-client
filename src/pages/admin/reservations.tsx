@@ -1,12 +1,9 @@
 /* eslint-disable simple-import-sort/imports */
-import { EventSourceInput } from '@fullcalendar/react'; // must go before plugins
 import { Box, Tabs } from '@mantine/core';
 import React from 'react';
 import { IconBorderAll, IconCalendarEvent, IconCheck } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
-import day from 'dayjs';
 
-import { useGetReservations } from '../../common/hooks/api';
 import { AdminReservationsCalendar } from '../../common/components/reservations/AdminReservationsCalendar';
 import { ModalReservation } from '../../common/components/modals/ModalReservation';
 import { Admin } from '../../common/components/templates/Admin';
@@ -15,27 +12,9 @@ import { TableReservations } from '../../common/components/tables/TableReservati
 import { NextPageWithLayout } from '../_app';
 
 const Reservations: NextPageWithLayout = () => {
-  const { data: getReservations } = useGetReservations();
-
   const [type, setType] = React.useState<Data.Action>('Create');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [leaseId, setLeaseId] = React.useState(0);
-
-  const reservationEvents = React.useMemo(() => {
-    return (
-      getReservations?.data
-        .filter(
-          (reservation) =>
-            reservation.reservationPayments?.[0].status === 'Approved'
-        )
-        .map((reservation) => ({
-          end: day(reservation.endDate).format('YYYY-MM-DDThh:mm:ss'),
-          id: `${reservation.id}`,
-          start: day(reservation.startDate).format('YYYY-MM-DDThh:mm:ss'),
-          title: `${reservation.tenant.firstName} ${reservation.tenant.lastName}`,
-        })) || []
-    );
-  }, [getReservations?.data]);
 
   const handleSuccess = (message: string) => {
     showNotification({
@@ -85,7 +64,6 @@ const Reservations: NextPageWithLayout = () => {
           <Tabs.Panel value="calendar">
             <AdminReservationsCalendar
               eventClick={(info) => handleOnAction('View', +info.event.id)}
-              events={reservationEvents as EventSourceInput}
             />
           </Tabs.Panel>
         </Tabs>
