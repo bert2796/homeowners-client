@@ -39,6 +39,18 @@ export default function App(props: AppPropsWithLayout) {
         colorScheme: 'light',
         colors: {
           sidebar: ['#1e1e2d'],
+          stiBlue: [
+            '#E6F4FF',
+            '#B8DFFF',
+            '#8ACBFE',
+            '#5DB7FE',
+            '#2FA3FE',
+            '#028EFD',
+            '#0172CB',
+            '#015598',
+            '#013965',
+            '#001C33',
+          ],
         },
         other: {
           breakpoints: {
@@ -49,7 +61,7 @@ export default function App(props: AppPropsWithLayout) {
           collapsedSidebarWidth: 74,
           sidebarWidth: 250,
         },
-        primaryColor: 'pink',
+        primaryColor: 'stiBlue',
       }}
     >
       <style global jsx>{`

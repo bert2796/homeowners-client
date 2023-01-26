@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Checkbox,
+  createStyles,
   Group,
   Paper,
   PasswordInput,
@@ -24,6 +25,7 @@ export const LoginForm = () => {
       username: '',
     },
   });
+  const { classes } = useStyles();
   const [error, setError] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -55,14 +57,7 @@ export const LoginForm = () => {
     <div>
       <Paper withBorder p={35} radius="md" shadow="md">
         <Box>
-          <Title
-            sx={(theme) => ({
-              fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-              fontWeight: 900,
-            })}
-          >
-            Login
-          </Title>
+          <Title className={classes.login}>Login</Title>
           <Text>Welcome back!</Text>
         </Box>
 
@@ -103,6 +98,7 @@ export const LoginForm = () => {
             </Group>
             <Button
               fullWidth
+              color="stiBlue"
               disabled={isLoginDisabled}
               loading={isLoading}
               mt="xl"
@@ -117,3 +113,10 @@ export const LoginForm = () => {
     </div>
   );
 };
+
+const useStyles = createStyles((theme) => ({
+  login: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 900,
+  },
+}));
